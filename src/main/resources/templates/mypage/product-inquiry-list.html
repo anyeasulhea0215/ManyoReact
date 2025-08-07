@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>나의 상품문의 목록</title>
+  <style>
+
+    table {
+        width: 1000px;
+        margin: 50px auto;
+        border-collapse: collapse;
+        margin-top:50px;
+    }
+
+    th, td {
+        padding: 12px;
+        border-bottom: 1px solid #ccc;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 180px;
+    }
+  </style>
+</head>
+<body>
+<header th:replace="fragments/header :: my-header"></header>
+<h2>나의 상품목록</h2>
+<table>
+  <thead>
+  <tr>
+    <th>작성일</th>
+    <th>제목</th>
+    <th>문의내용</th>
+    <th>답변여부</th>
+    <th>삭제여부</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="inquiry : ${myInquiries}">
+    <td th:text="${inquiry.regDate}">2025-07-15</td>
+    <td th:text="${inquiry.title}">문의 제목</td>
+    <td th:text="${inquiry.content}">문의 내용</td>
+    <td th:text="${inquiry.isAnswered == 'Y' ? '답변완료' : '미답변'}"></td>
+    <td>
+      <form th:action="@{/mypage/product-inquiries/delete}" method="post" style="display:inline;">
+        <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}" />
+        <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<footer th:replace="fragments/footer :: my-footer"></footer>
+</body>
+</html>

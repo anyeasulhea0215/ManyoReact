@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>결제완료페이지</title>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            margin-top:200px;
+            margin-bottom:50px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info {
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .payment-box {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: #fafafa;
+            border-radius: 5px;
+        }
+
+        .payment-box strong {
+            font-size: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-right:15px;
+            gap:10px;
+            padding:12px 24px;
+            margin-top: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .btn.order {
+              background-color: #a00;
+            color: white
+        }
+        .btn.shopping {
+            background-color: #ffffff;
+            border: 1px solid #a00;
+        }
+
+        .btn:hover {
+            background-color: #700;
+            color:#fff;
+        }
+
+        .button-group {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="fragments/header :: my-header"></header>
+<div class="container">
+    <div class="title">Thank you!</div>
+    <hr>
+    <h2 th:text="${userName} + '님의 주문이 완료되었습니다.'"></h2>
+    <p>주문이 정상적으로 접수되었습니다.</p>
+    <hr>
+    <div class="section">
+        <div class="section-title">주문번호</div>
+        <div class="info" th:text="${orderNumber}"></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">배송정보</div>
+        <div class="info" th:text="${name}"></div>
+        <div class="info" th:text="${phone}"></div>
+        <div class="info" th:text="${address}"></div>
+        <div class="info" th:text="'남기실 말씀: ' + ${message}"></div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">결제수단</div>
+        <div class="info">에스크로 가상계좌</div>
+        <div class="info" th:text="'입금은행: ' + ${bank}"></div>
+        <div class="info" th:text="'가상계좌: ' + ${accountNumber}"></div>
+        <div class="info" th:text="'예금주명: ' + ${accountHolder}"></div>
+        <div class="info" th:text="'송금기한: ' + ${deadline} + ' 까지'"></div>
+        <div class="info" th:text="'입금금액: ' + ${paymentAmount} + '원'"></div>
+    </div>
+
+    <div class="payment-box">
+        <div><strong>상품 합계:</strong> <span th:text="${paymentAmount - deliveryFee} + '원'"></span></div>
+        <div><strong>배송비:</strong> <span th:text="${deliveryFee} + '원'"></span></div>
+        <hr>
+        <div><strong>총 결제금액:</strong> <span th:text="${paymentAmount} + '원'"></span></div>
+    </div>
+
+
+    <a th:href="@{/mypage/orders}" class="btn order">주문내역 확인</a>
+    <a th:href="@{/products}" class="btn shopping">쇼핑 계속하기</a>
+</div>
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</body>
+</html>

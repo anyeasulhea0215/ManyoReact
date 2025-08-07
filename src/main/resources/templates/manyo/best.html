@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>베스트상품</title>
+    <link rel="stylesheet" th:href="@{/assets/css/best.css}" />
+    <style>
+    .main{
+    padding-top:160px;
+    background-color: #ffffff;
+    }
+    </style>
+</head>
+<body th:attr="data-user-id=${memberInfo != null ? memberInfo.id : ''}">
+<header th:replace="~{fragments/header :: my-header}"></header>
+<main class="main">
+    <div class="dropdown-container">
+        <div class="section-title">
+            <span class="best">베스트</span>
+            <span class="arrow">&#9660;</span>
+        </div>
+        <ul class="dropdown-menu">
+            <li><a href="/special">특가</a></li>
+            <li><a href="/best">베스트</a></li>
+            <li><a href="/skin">피부고민별</a></li>
+            <li><a href="/category">카테고리별</a></li>
+            <li><a href="/line">라인별</a></li>
+            <li><a href="/new">신상품</a></li>
+        </ul>
+    </div>
+
+    <form action="/best" method="get" class="search-form">
+        <input type="text" name="keyword" placeholder="상품명을 입력하세요" th:value="${keyword}" class="search-input" />
+        <button type="submit" class="search-button">검색</button>
+    </form>
+
+    <p class="product-count" th:if="${bestProducts == null}" style="margin-left:60px;">0개의 상품</p>
+    <p class="product-count" th:if="${bestProducts != null}" th:text="${bestProducts.size()} + '개의 상품'">0개의 상품</p>
+
+    <div class="product-grid">
+        <div class="product" th:each="best : ${bestProducts}">
+            <div class="product-img-box">
+                <a th:href="@{/products/detail(productId=${best.productId})}">
+                <img th:src="@{${best.productImg}}" th:alt="${best.productName}" class="product-img" />
+            </a>
+
+            </div>
+            <p class="product-name" th:text="${best.productName}">상품명</p>
+            <div class="price-box">
+                <span class="price-original" th:text="${#numbers.formatDecimal(best.productPrice, 0, 'COMMA', 0, 'POINT')} + '원'">35,000원</span>
+                <span class="price-sale" th:text="${#numbers.formatDecimal(best.salePrice, 0, 'COMMA', 0, 'POINT')} + '원'">28,000원</span>
+
+                <span class="discount" th:text="${best.discount} + '%'">20%</span>
+            </div>
+            <div class="delivery">
+                <img th:src="@{/assets/img/best_img/베스트_마법배송.png}" alt="마법배송" class="delivery-icon" />
+                <span class="arrival-date" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">내일 6/28(금) 도착 예정</span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-wrapper">
+        <div class="pagination">
+            <a th:href="@{/best(page=1, keyword=${keyword})}"
+               th:class="${pageHelper != null and pageHelper.nowPage == 1} ? 'page current' : 'page'">1</a>
+
+            <a th:href="@{/best(page=2, keyword=${keyword})}"
+               th:class="${pageHelper != null and pageHelper.nowPage == 2} ? 'page current' : 'page'">2</a>
+
+
+        </div>
+    </div>
+</main>
+<div th:replace="~{fragments/footer :: my-footer}" />
+
+<script th:src="@{/assets/js/logout.js}"></script>
+
+<script th:src="@{/assets/js/RecentViewProducts.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>내가 작성한 리뷰</title>
+  <style>
+
+    .content {
+      margin-left: 400px;
+      padding-top: 170px;
+      width: 800px;
+    }
+    .review-item {
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+      position: relative;
+    }
+    .review-item h3 {
+      margin: 0 0 10px 0;
+    }
+    .review-item p {
+      margin: 5px 0;
+    }
+    .review-date {
+      font-size: 12px;
+      color: #888;
+    }
+    .review-actions {
+      position: absolute;
+      top: 15px;
+      right: 0;
+    }
+    .review-actions form {
+      display: inline;
+    }
+    .btn {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 5px 10px;
+      font-size: 12px;
+      border: 1px solid #888;
+      background-color: #f4f4f4;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+    }
+    .btn:hover {
+      background-color: #ddd;
+    }
+    .top-actions {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: my-header}"></div>
+
+<div class="content">
+  <h2>내가 작성한 리뷰</h2>
+
+
+
+  <div th:if="${#lists.isEmpty(myReviews)}">
+    작성한 리뷰가 없습니다.
+  </div>
+
+  <div th:each="review : ${myReviews}" class="review-item">
+
+    <div class="review-actions">
+      <a th:href="@{'/reviews/edit/' + ${review.reviewId}}" class="btn">수정</a>
+      <form th:action="@{'/reviews/' + ${review.reviewId}}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit" class="btn">삭제</button>
+      </form>
+
+      </form>
+    </div>
+
+    <h3 th:text="${review.title}">리뷰 제목</h3>
+    <p>상품 ID: <span th:text="${review.productId}"></span></p>
+    <p>별점: <span th:text="${review.rating}"></span>점</p>
+    <p th:text="${review.content}"></p>
+    <div th:if="${review.imageUrl != null}">
+      <img th:src="@{${review.imageUrl}}" alt="리뷰 사진" style="max-width:200px; max-height:200px;" />
+    </div>
+    <p class="review-date">
+      작성일: <span th:text="${#temporals.format(review.regDate, 'yyyy-MM-dd HH:mm')}"></span>
+      <span th:if="${review.editDate != null}">(수정됨: <span th:text="${#temporals.format(review.editDate, 'yyyy-MM-dd HH:mm')}"></span>
+)</span>
+    </p>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+<script th:src="@{/assets/js/logout.js}"></script>
+
+</body>
+</html>

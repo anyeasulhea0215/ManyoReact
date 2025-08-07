@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>문의 상세</title>
+  <style>
+    body {
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 40px 20px;
+        color: #333;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        padding: 30px 40px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: black;
+        border-bottom: 2px solid #d60000;
+        padding-bottom: 10px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #666;
+    }
+
+    .info-value {
+        font-weight: 500;
+    }
+
+    .content-section {
+        margin-top: 30px;
+    }
+
+    .content-section h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+        color: black;
+        border-bottom: 1px solid #d60000;
+        padding-bottom: 6px;
+    }
+
+    .content-box {
+        background: #fff4f4;
+        border: 1px solid #d60000;
+        border-radius: 6px;
+        padding: 20px;
+        white-space: pre-wrap;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #555;
+    }
+
+    .answer-box {
+        background: #f0f8ff;
+        border: 1px solid #007acc;
+        border-radius: 6px;
+        padding: 20px;
+        margin-top: 25px;
+        white-space: pre-wrap;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #333;
+    }
+
+    .no-answer {
+        color: #999;
+        font-style: italic;
+        margin-top: 15px;
+    }
+
+    .btn-container {
+        margin-top: 35px;
+        text-align: right;
+    }
+
+    .btn-back {
+        background-color: #d60000;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-back:hover {
+        background-color: #a50000;
+    }
+  </style>
+</head>
+<body>
+<div class="container" th:if="${inquiry != null}">
+  <h1 th:text="'문의 상세 - ' + ${inquiry.title}">문의 상세 - 제목</h1>
+
+  <div class="info-row">
+    <div class="info-label">문의 유형:</div>
+    <div class="info-value" th:text="${inquiry.inquiryType}">문의 유형</div>
+  </div>
+  <div class="info-row">
+    <div class="info-label">등록일:</div>
+    <div class="info-value" th:text="${#temporals.format(inquiry.regDate, 'yyyy-MM-dd HH:mm')}">2025-07-16 10:00</div>
+  </div>
+  <div class="info-row">
+    <div class="info-label">답변 상태:</div>
+    <div class="info-value" th:text="${inquiry.isAnswered == 'Y' ? '답변완료' : '미답변'}">미답변</div>
+  </div>
+
+  <div class="content-section">
+    <h2>문의 내용</h2>
+    <div class="content-box" th:text="${inquiry.content}">문의 내용이 여기에 표시됩니다.</div>
+  </div>
+
+  <div class="content-section" th:if="${inquiry.isAnswered == 'Y'}">
+    <h2>답변 내용</h2>
+    <div class="answer-box" th:text="${inquiry.answer}">답변 내용이 여기에 표시됩니다.</div>
+  </div>
+  <div class="content-section" th:if="${inquiry.isAnswered != 'Y'}">
+    <div class="no-answer">아직 답변이 등록되지 않았습니다.</div>
+    <form th:action="@{/products/product-inquiry-answer}" method="post" style="margin-top: 20px;">
+      <input type="hidden" name="inquiryId" th:value="${inquiry.inquiryId}" />
+      <label for="answer">답변 작성</label><br>
+      <textarea id="answer" name="answer" rows="5" style="width: 100%;" required></textarea><br>
+      <button type="submit" style="margin-top: 10px;">답변 등록</button>
+    </form>
+</body>
+</html>

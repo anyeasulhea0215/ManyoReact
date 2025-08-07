@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 40px;
+      color: #111;
+    }
+
+    .product-title{
+    padding-left:10px;}
+    .container{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 150px;
+    }
+
+    .left-content{
+        flex: 2;
+        margin-left: 40px;
+        max-width: 900px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+
+    .product-table, order-info{
+        width: 100%;
+        border-top: 2px solid #000;
+        border-collapse: collapse;
+    }
+
+    .product-table th, .product-tabld td{
+        border-bottom: 1px solid #ccc;
+        padding:20px 10px;
+        text-align: center;
+    }
+
+    .product-table tbody tr{
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+    }
+
+    .product-table tbody td{
+        padding: 20px 30px;
+    }
+
+    .product-info{
+        display: flex;
+        align-items: center;
+        grid-area: 20px;
+        text-align: left;
+    }
+
+     .product-info img {
+      width: 80px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .highlight{
+        color: red;
+        font-weight: bold;
+    }
+
+    .order-info{
+        padding-top: 10px;
+    }
+
+    .section .order-info-header{
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        border-bottom: 1px solid #000;
+    }
+
+     .required {
+      color: red;
+      margin-right: 6px;
+    }
+
+    .summary-text {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.info-table th {
+  width: 150px;
+  text-align: left;
+  padding: 12px;
+  background-color: #fafafa;
+  vertical-align: middle;
+  font-weight: 600;
+}
+
+.info-table td {
+  padding: 12px;
+}
+
+.info-table input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+}
+
+.payment-info-header{
+        border-bottom: 1px solid #000;
+}
+
+.payment-info-body{
+    .payment-button{
+        display: flex;
+        align-items: center;
+    }
+
+    .pay1{
+        display: flex;
+        align-items: center;
+        gap: 100px;
+
+        .credit-card{
+            border:1px solid #b40000;
+            color: #b40000;
+        }
+    }
+
+    .pay2{
+        display: flex;
+        align-items: center;
+        gap: 80px;
+    }
+
+    .pay1 button,
+    .pay2 button{
+      padding: 15px 40px;
+      border-radius: 6px;
+      border: 1px solid #b4b3b3;
+      color: #b4b3b3;
+      cursor: pointer;
+    }
+}
+
+.selected-payment {
+    border: 1px solid #b40000 !important;
+    color: #b40000 !important;
+  }
+
+
+    .payment-box{
+
+        border: 1px solid #000000;
+        padding: 20px;
+        border-radius: 4px;
+        font-size: 14px;
+        width: 25%;
+        margin-right: 80px;
+        box-sizing: border-box;
+        height: auto;
+        max-height: 500px;
+    }
+
+    .payment-box h3{
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .payment-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      span{
+        color: #b4b3b3;
+      }
+    }
+
+    .payment-box .total-sale{
+        margin: 15px 0;
+        padding: 8px 0;
+        border-top:1px solid #b4b3b3;
+        border-bottom: 1px solid #b4b3b3;
+    }
+
+    .payment-row.total {
+      font-weight: bold;
+      font-size: 18px;
+      color: #b40000;
+      border-bottom: 1px solid #000;
+      padding: 20px 0;
+      margin-top: 12px;
+
+      .payment-tag{
+        color: black;
+      }
+      .payment-price{
+        color: #b40000;
+      }
+    }
+
+    .payment-footer {
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .btn-order {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      background-color: #c40000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .free-shipping {
+      background: #f2e4a2;
+      color: #333;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 5px;
+    }
+
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: my-header}"></div>
+<form th:action="@{/orders/order-ok}" method="post">
+    <div th:if="${basketList != null}">
+        <div th:each="b : ${basketList}" th:if="${b.basketId != null}">
+            <input type="hidden" name="basketIds[]" th:value="${b.basketId}" />
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="left-content">
+            <div class="section">
+                <h2>주문서 작성</h2>
+                <p class="summary-text">총<strong th:text="${#lists.size(basketList)}" style="color: #b40000;">0</strong>개의 상품
+                <table class="product-table">
+                    <thead>
+                    <tr>
+                        <th>상품/옵션정보</th>
+                        <th>수량</th>
+                        <th>합계금액</th>
+                        <th>할인/적립</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${basketList == null or #lists.isEmpty(basketList)}">
+                        <td colspan="4">장바구니에 담긴 상품이 없습니다.</td>
+                    </tr>
+                    <tr th:each="basket : ${basketList}">
+                        <input type="hidden" name="basketIds[]" th:each="b : ${basketList}"
+                               th:if="${b.basketId != null}"
+                               th:value="${b.basketId}" />
+
+                        <td>
+                            <div class="product-info">
+                                <img th:src="@{${basket.product?.productImg ?: '/images/default.png'}}" alt="상품이미지">
+                                <div class="product-title" th:text="${basket.product?.productName ?: '[상품명]'}">[상품명]</div>
+                            </div>
+                       </td>
+                        <td th:text="${basket.quantity ?: 0}">1개</td>
+                        <td>
+                            <div class="highlight" th:text="${basket.product.discount} + '%'">0%</div>
+                            <span th:text="${#numbers.formatInteger(basket.product?.salePrice ?: 0, 0, 'COMMA')} + '원'">340원</span>
+                        </td>
+                        <td>
+                            <span style="font-size:14px"> 적립</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--주문자 정보-->
+            <div class="section">
+                <div class="order-info-header">
+                    <h2>주문자 정보</h2>
+                    <p>
+                        <span class="required">*</span>
+                        <label>필수 입력사항</label>
+                    </p>
+                </div>
+
+                <div class="order-info-body">
+                    <table class="info-table">
+                        <tr>
+                            <th><span class="required">*</span> 주문자</th>
+                            <td><input type="text" th:value="${member != null ? member.userName : ''}" /></td>
+                        </tr>
+                        <tr>
+                            <th>주소</th>
+                            <td><input type="text" th:value="${member != null ? member.addr1 : ''}" /></td>
+                            <td><input type="text" th:value="${member != null ? member.addr2 : ''}" /></td>
+                        </tr>
+                        <tr>
+                            <th><span class="required">*</span> 휴대폰 번호</th>
+                            <td><input type="text" th:value="${member != null ? member.phone : ''}"  /></td>
+                        </tr>
+                        <tr>
+                            <th><span class="required">*</span> 이메일</th>
+                            <td>
+                                <input type="email" th:value="${member != null ? member.email : ''}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <div class="payment-info-header">
+                    <h2>결제수단 선택/결제</h2>
+                </div>
+
+                <div class="payment-info-body">
+                    <div class="pay1">
+                        <div class="payment-button">
+                            <span class="required">*</span>
+                            <h4>일반결제</h4>
+                        </div>
+                        <div>
+                            <button type="button" class="payment-btn selected-payment" data-method="신용카드">신용카드</button>
+                            <button type="button" class="payment-btn" data-method="네이버페이">네이버페이</button>
+                            <button type="button" class="payment-btn" data-method="카카오페이">카카오페이</button>
+                        </div>
+                    </div>
+
+                    <div class="pay2">
+                        <div class="payment-button">
+                            <span class="required">*</span>
+                            <h4>에스크로 결제</h4>
+                        </div>
+
+                        <div>
+                            <button type="button" class="payment-btn" data-method="계좌이체">계좌이체</button>
+                            <button type="button" class="payment-btn" data-method="가상계좌">가상계좌</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+                const paymentButtons = document.querySelectorAll(".payment-btn");
+                const paymentMethodInput = document.getElementById("paymentMethod");
+
+                paymentButtons.forEach(button => {
+                  button.addEventListener("click", function () {
+                    paymentButtons.forEach(btn => btn.classList.remove("selected-payment"));
+                    this.classList.add("selected-payment");
+
+                    paymentMethodInput.value = this.getAttribute("data-method");
+                  });
+                });
+            </script>
+
+
+        </div>
+
+        <div class="payment-box">
+            <h3>결제정보</h3>
+
+            <div class="payment-row">
+                <span>총 상품금액</span>
+                <span th:text="${#numbers.formatInteger(totalPrice ?: 0, 0, 'COMMA')} + '원'">30,350원</span>
+            </div>
+
+            <div class="payment-row">
+                <span>배송비</span>
+                <span th:if="${totalPrice >= 30000}">무료배송</span>
+                <span th:unless="${totalPrice >= 30000}" th:text="'3,000원'">3,000원</span>
+            </div>
+
+            <div class="payment-row total-sale">
+                <span>총 할인금액</span>
+                <span>(-) 0  원</span>
+            </div>
+
+            <div class="payment-row total">
+                <span class="payment-tag">결제금액</span>
+                <span class="payment-price"
+                      th:text="${#numbers.formatInteger(totalPrice + deliveryFee, 0, 'COMMA')} + '원'">0원
+    </span>
+            </div>
+
+            <input type="hidden" name="productId" th:value="${productId}" />
+            <input type="hidden" name="quantity" th:value="${quantity}" />
+
+            <input type="hidden" name="paymentMethod" id="paymentMethod" value="신용카드" />
+            <input type="hidden" name="message" value="문 앞에 놓아주세요." />
+
+
+            <div class="payment-footer">
+                <p>예상 적립 마일리지 559원</p>
+                <button type="submit" class="btn-order">결제하기</button>
+                <p><input type="checkbox" required /> 개인정보 제3자 제공에 대한 동의 (필수)</p>
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+
+</body>
+
+</html>

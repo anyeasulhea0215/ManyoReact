@@ -1,0 +1,157 @@
+main {
+  padding-top: 220px; 
+}
+.delete-btn {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  margin-left: 800px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+.quantity{
+font-size: 14px;
+margin-left: 20px;
+}
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+min-height: 60vh;
+}
+
+.cart-left {
+  width: 70%;
+}
+
+.cart-right {
+  width: 25%;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.total-price {
+  font-weight: bold;
+  font-size: 20px;
+  color: #b00020;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 100px 0;
+  color: #555;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.product-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.product-title {
+  margin: 0;
+  font-size: 14px;
+}
+.quantity-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.qty-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.qty-btn:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.qty-input {
+  width: 40px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 30px;
+  font-size: 16px;
+  pointer-events: none;
+  background-color: #fff;
+}
+
+.delete-button {
+  background-color: #b00020;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+.discount {
+  color: red;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.price-right {
+  float: right;
+}
+
+.notice {
+  font-size: 12px;
+  color: #b00020;
+}
+
+.pay-button {
+  width: 100%;
+  background-color: #b00020;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.badge-free {
+  background: #f2e5ac;
+  color: #b00020;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 5px;
+  margin-left: 6px;
+}

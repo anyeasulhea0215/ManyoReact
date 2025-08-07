@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login-page</title>
+
+    <style>
+        .login-body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+
+             width: 500px;
+            margin: 200px auto;
+             font-family: sans-serif;
+            color: #333;
+        }
+
+        .member-tab{
+            display: flex;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+
+            .pick{
+                flex: 1;
+                border-right: 1px solid #c0bebe;
+                background-color: rgb(255, 255, 255);
+            }
+            button{
+                 width: 200px;
+              padding: 14px 20px;
+              background: #f9f9f9;
+              border: none;
+              font-weight: bold;
+              color: #aaa;
+              cursor: pointer;
+              white-space: nowrap;
+            }
+
+        }
+
+        .login-input{
+            display: flex;
+            flex-direction: column;
+
+            .input-box{
+                width: 400px;
+                display: flex;
+                flex-direction: column;
+
+                 input[type="text"],
+                 input[type="password"] {
+                   width: 100%;
+                   box-sizing: border-box;
+                    padding: 12px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ddd;
+                     border-radius: 6px;
+                     font-size: 14px;
+                  }
+            }
+
+            .option-box{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 14px;
+                margin-bottom: 20px;
+
+                label{
+                    margin-right: 10px;
+                    white-space: no-wrap;
+                }
+                a{
+                    text-decoration: none;
+                    color: black;
+                    font-weight: 500;
+                }
+            }
+
+            .login-button{
+                margin-bottom: 20px;
+                 button{
+                     width: 100%;
+                    background: #b9131b;
+                       color: white;
+                       border: none;
+                      border-radius: 5px;
+                      padding: 14px 0;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                 }
+            }
+
+            .divider-line{
+                border-top: 1px solid rgb(228, 226, 226);
+            }
+
+            .join-button{
+                margin-top: 34px;
+                button{
+                   width: 100%;
+                    background: #ffffff;
+                       color: rgb(204, 201, 201);
+                       border: 1px solid rgb(204, 201, 201);
+                      border-radius: 5px;
+                      padding: 14px 0;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .user-ico {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 20px auto;
+        }
+
+        .btn-container{
+           display: flex;
+           gap: 14px;
+           align-items: center;
+           text-align: center;
+
+           .btn {
+        width: 100%;
+        padding: 14px;
+        background-color: #b9131b;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 14px;
+
+        &:hover {
+            background-color: #8f0a10;
+           }
+         }
+        }
+
+        .form-footer {
+        text-align: center;
+        margin-top:14px;
+
+        a {
+            color: #b9131b;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    </style>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: my-header}">
+    </div>
+
+    <div class="login-body">
+
+        <div class="member-tab" th:if="${session.memberInfo == null}">
+            <div class="pick">
+                 <button>기존 회원이세요?</button>
+            </div>
+            <div>
+                 <button>비회원 배송조회</button>
+            </div>
+        </div>
+
+         <div class="login-input" th:if="${session.memberInfo == null}">
+
+            <h3 class="page-title">로그인 후 다양한 서비스를 이용할 수 있습니다</h3>
+
+           <form id="login-form" method="post">
+              <div class="input-box">
+                <input type="text" id="user_id" name="user_id" placeholder="아이디" />
+                <input type="password" id="user_pw" name="user_pw" placeholder="비밀번호" />
+            </div>
+
+
+             <div class="option-box">
+              <label><input type="checkbox"  name="rememberId"
+             th:checked="${rememberId != null}" value="Y"/> 아이디 저장</label>
+              <label><input type="checkbox" /> 자동 로그인</label>
+               <a class="find-box" th:href="@{/login/find_id}">아이디/비밀번호 찾기</a>
+             </div>
+            <div class="login-button">
+                    <button type="submit" class="btn">
+                    (기존 회원) 로그인
+                   </button>
+            </div>
+           </form>
+
+            <div class="divider-line"></div>
+
+            <div class="join-button">
+                 <a th:href="@{/login/terms}">
+                    <button>
+                        일반회원 가입하기
+                    </button>
+                 </a>
+            </div>
+         </div>
+
+          <div class="account-container account" th:unless="${session.memberInfo == null}">
+          <img th:src="@{/assets/img/noimage.jpg}"  class="user-ico" th:if="${session.memberInfo.photo == null or session.memberInfo.photo == ''}" />
+
+         <img th:src="${@fileHelper.getFileUrl(session.memberInfo.photo)}"  class="user-ico" th:unless="${session.memberInfo.photo == null or session.memberInfo.photo == ''}" />
+
+         <h2 class="page-title">  환영합니다 [<span th:text="${session.memberInfo.userName}"></span>]님! </h2>
+         <p>계정을 통해 다양한 서비스를 이용하세요</p>
+
+
+         <div class="btn-container">
+            <a th:href="@{/mypage/member-edit}" class="btn">내 정보 수정</a>
+            <a th:href="@{/api/account/logout}" class="btn" id="btn-logout">로그아웃</a>
+       </div>
+
+        <div class="form-footer">
+            <p><a th:href="@{/login/out}">회원탈퇴</a></p>
+        </div>
+
+           <script>
+         document.querySelector("#btn-logout").addEventListener('click',async (e) => {
+            e.preventDefault();
+
+            const data=await fetchHelper.get(e.currentTarget.getAttribute('href'));
+
+            if(data){
+                window.location.reload();
+            }
+         });
+         </script>
+        </div>
+
+
+    </div>
+
+    <div th:replace="~{fragments/footer :: my-footer}"/>
+
+
+<script>
+   document.querySelector("#login-form").addEventListener('submit',async (e)=>{
+
+    e.preventDefault();
+
+  try{
+    regexHelper.value("#user_id","아이디를 입력하세요");
+    regexHelper.value("#user_pw","비밀번호 입력하세여");
+  } catch(err){
+       await utilHelper.alertDanger(err.message);
+       setTimeout(()=>err.element.focus(),1);
+       return false;
+ }
+
+     const form = e.currentTarget;
+    const formData = new FormData(form);
+
+      const rememberIdChecked = form.querySelector('input[name="rememberId"]').checked;
+    if (rememberIdChecked) {
+        formData.set("rememberId", "Y");
+    }
+
+
+    try{
+        await fetchHelper.post('[[@{/api/account/login}]]' ,formData); //post로 회워정보 전송 ->select
+    } catch(err){
+        await utilHelper.alertDanger(err.message);
+        setTimeout(()=> err.element.focus(),1);
+           return false;
+    }
+
+    window.location="[[@{/account}]]";
+   });
+
+</script>
+
+ <th:block th:replace="~{_fragments/_scripts :: my-scripts}"></th:block>
+
+</body>
+</html>

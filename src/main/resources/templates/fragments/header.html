@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>헤더만 있는 문서</title>
+
+</head>
+<body>
+
+  <header th:fragment="my-header">
+
+       <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <div class="header1">
+      <p class="header1-text">지금 카카오톡 친구 추가하면 3,000할인 적립!</p>
+    </div>
+
+    <div class="login">
+      <p class="login-text">
+        <a th:href="@{/login/login}" th:if="${session.memberInfo == null}">로그인</a>
+         <a href="#" th:unless="${session.memberInfo == null}" id="logoutBtn">로그아웃</a>  <!-- js에서 get->logout실행..-->
+        <a th:href="@{/mypage/orders}">주문배송</a>
+        <a th:href="@{/membership}">멤버십</a>
+        <a th:href="@{/service/customor-center}">고객센터</a>
+      </p>
+    </div>
+
+    <div class="header">
+      <div class="left-box">
+        <div class="logo">
+          <a th:href="@{/manyo/main}">
+           <img th:src="@{/assets/img/header-logo.svg}" alt="로고" />
+      </a>
+      </div>
+
+        <div class="gnb_wrapper">
+          <a th:href="@{/all}">
+            <img class="menu" th:src="@{/assets/img/메뉴바.png}" alt="메뉴">
+          </a>
+          <ul class="gnb_menu_box">
+            <li class="menu-item"><a th:href="@{/products}">전체</a></li>
+            <li class="menu-item"><a th:href="@{/manyo/event}">이벤트</a></li>
+            <li class="menu-item"><a th:href="@{/manyo/best}">베스트</a></li>
+            <li class="menu-item"><a th:href="@{/manyo/special-price}">특가</a></li>
+            <li class="menu-item"><a th:href="@{/manyo/brand-story}">스토리</a></li>
+            <li class="menu-item"><a th:href="@{/manyo/global_partners}">GlobalPartners</a></li>
+          </ul>
+
+          <div class="icon">
+            <div class="search-wrapper">
+              <!-- <img th:src="@{/assets/img/돋보기.png}" alt="돋보기" class="search-icon" />
+              <input type="search" name="keyword" id="my-search" th:value="${keyword}" /> -->
+
+               <form action="/products" method="get" class="search-form" style="position: relative;">
+               <input type="text" name="keyword" id="my-search" placeholder="" th:value="${keyword}" />
+              <button type="submit" style="position: absolute; right: 0; top: 50%; transform:    translateY(-50%); background: none; border: none;  cursor: pointer;">
+                <img th:src="@{/assets/img/돋보기.png}" alt="돋보기" class="search-icon" />
+               </button>
+               </form>
+            </div>
+
+              <a th:href="@{/orders/cart}">
+                <img th:src="@{/assets/img/마이페이지.png}" alt="장바구니">
+            </a>
+
+            <a  th:href="@{/mypage/my-page}">
+              <img th:src="@{/assets/img/장바구니.png}" alt="마이페이지" />
+           </a>
+
+           <!--   <a th:if="${session.memberInfo == null}" th:href="@{/login/login}">
+                <img th:src="@{/assets/img/마이페이지.png}" alt="마이페이지" />
+             </a>-->
+            <!-- login상태시 -> 마이페이지.. login상태 아닐시 -> 로그인 페이지 .. -->
+
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+
+html, body {
+  height: auto;
+  overflow-y: auto;
+}
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #fff;
+  color: #222;
+}
+
+main {
+   display: flex;
+  flex-direction: row;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 180px;
+}
+
+
+aside {
+  width: 220px;
+  flex-shrink: 0;
+  margin-left: 40px;
+}
+
+aside h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+aside h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+aside ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+aside li {
+  margin: 6px 0;
+}
+
+aside a {
+  text-decoration: none;
+  color: #888;
+  font-size: 14px;
+}
+
+aside a:hover {
+  color: #111;
+  font-weight: 500;
+}
+
+aside hr {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+
+
+section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+.content-wrapper {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+
+}
+
+
+
+
+.order-progress h2 {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-top: 0;
+}
+
+.order-progress .sub-text {
+  font-size: 12px;
+  color: #888;
+  font-weight: normal;
+  margin-left: 10px;
+}
+
+.order-status {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 30px 0;
+}
+
+.order-status .step {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.order-status .count {
+  display: block;
+  font-size: 30px;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.order-status .label {
+  font-size: 14px;
+  color: #888;
+}
+
+.order-status .arrow {
+  font-size: 18px;
+  color: #555;
+  margin-top: 12px;
+}
+
+
+.recent-orders h2 {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+  padding-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 0;
+
+}
+
+
+.recent-orders .more-link {
+  font-size: 14px;
+  color: #111;
+  text-decoration: none;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+}
+
+.order-table th, .order-table td {
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 14px;
+  padding: 12px 8px;
+}
+
+.order-table th {
+
+  font-weight: bold;
+}
+
+.no-data {
+  padding: 40px 0;
+  color: #444;
+  font-weight: bold;
+}
+
+
+.recent-viewed h2 {
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-top: 40px;
+}
+
+/* .recently-products {
+  padding: 30px 0;
+  text-align: center;
+  color: #444;
+} */
+
+
+.order-progress,
+.recent-orders,
+.recent-viewed {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.order-filter-inline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.radio-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.radio-buttons label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.radio-buttons input[type="radio"] {
+  margin-right: 4px;
+  transform: scale(1.1);
+}
+
+
+.date-search-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-search-group input[type="date"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.date-search-group span {
+  font-size: 14px;
+  color: #888;
+}
+
+.btn-search {
+  padding: 6px 14px;
+  background-color: #b20000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+  background-color: #8c0000;
+}
+
+
+.order-count {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+
+.order-table .no-data {
+  text-align: center;
+  color: #444;
+  font-weight: 500;
+  padding: 60px 0;
+}
+.order-title-line {
+  border: none;
+  border-bottom: 2px solid #000;
+  margin: 12px 0 20px 0;
+}
+
+
+
+.returns-tab {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  margin:  0;
+  border-bottom: 1px solid #ddd;
+  justify-content: flex-end;
+}
+
+.returns-tab > span,
+.returns-tab > strong {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.returns-tab > strong {
+  color: #c40000;
+  font-weight: bold;
+  border-bottom: 3px solid #c40000;
+}
+
+.returns-tab > span {
+  color: #999;
+}
+
+/*t선*/
+
+.table-top-line {
+  border: none;
+  border-top: 2px solid #ccc;
+  margin: 0 0 0 0;
+}
+.top-line {
+  border: none;
+  border-top: 1px solid #CCC;
+  margin: 0 0 5px 0;
+}

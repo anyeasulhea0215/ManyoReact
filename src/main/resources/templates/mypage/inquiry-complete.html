@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+        <head>
+            <meta charset="UTF-8">
+            <title>1:1 문의 완료</title>
+            <style>
+                body {
+                    margin: 0;
+                    font-family: 'Noto Sans KR', sans-serif;
+                    background-color: #fff;
+                    color: #222;
+                    overflow-x: hidden;
+                }
+
+                main {
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-top: 150px;
+                    margin-left: 10%;
+                }
+
+                aside {
+                    width: 220px;
+                    flex-shrink: 0;
+                    margin-left: 40px;
+                }
+
+                aside h2 {
+                    font-size: 24px;
+                    font-weight: 700;
+                    margin-bottom: 30px;
+                }
+
+                aside h3 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    margin-top: 30px;
+                    margin-bottom: 10px;
+                }
+
+                aside ul {
+                    list-style: none;
+                    padding-left: 0;
+                    margin: 0;
+                }
+
+                aside li {
+                    margin: 6px 0;
+                }
+
+                aside a {
+                    text-decoration: none;
+                    color: #888;
+                    font-size: 14px;
+                }
+
+                aside a:hover {
+                    color: #111;
+                    font-weight: 500;
+                }
+
+                aside hr {
+                    border: none;
+                    border-bottom: 1px solid #e0e0e0;
+                    margin: 20px 0;
+                }
+
+                .content {
+                    flex: 1;
+                    padding: 30px;
+                }
+
+                .complete-box {
+                    max-width: 800px;
+                    background-color: #f8f8f8;
+                    padding: 40px;
+                    margin: 0 auto;
+                    border-radius: 12px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+                }
+
+                .complete-box h2 {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 30px;
+                    text-align: center;
+                }
+
+                .info-line {
+                    margin: 10px 0;
+                    font-size: 16px;
+                }
+
+                .info-line span {
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+
+                .button-group {
+                    text-align: center;
+                    margin-top: 30px;
+                }
+
+                .button-group a button {
+                    padding: 10px 30px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin: 0 10px;
+                    border-radius: 5px;
+                    border: 1px solid rgb(168, 37, 37);
+                    background-color: #fff;
+                    color: rgb(168, 37, 37);
+                    cursor: pointer;
+                }
+
+                .button-group a button:hover {
+                    background-color: rgb(168, 37, 37);
+                    color: #fff;
+                }
+            </style>
+                </head>
+                <body>
+                    <header th:replace="fragments/header :: my-header"></header>
+                    <main>
+                    <aside>
+                    
+                    <h2>마이페이지</h2>
+
+                    <h3>쇼핑정보</h3>
+                    <ul>
+                        <li><a th:href="@{/mypage/orders}">주문목록/배송조회</a></li>
+                        <li><a th:href="@{/mypage/returns}">취소/반품/교환 내역</a></li>
+                        <li><a th:href="@{/mypage/refund}">환불/입금 내역</a></li>
+                        <li><a th:href="@{/mypage/wishlist}">위시리스트</a></li>
+                    </ul>
+
+                    <hr/>
+
+                    <h3>고객센터</h3>
+                    <ul>
+                        <li><a th:href="@{/mypage/inquiry}">1:1 문의</a></li>
+                    </ul>
+
+                    <hr/>
+
+                    <h3>회원정보</h3>
+                    <ul>
+                        <li><a th:href="@{/mypage/member-edit}">회원정보 변경</a></li>
+                        <li><a th:href="@{/mypage/withdraw}">회원 탈퇴</a></li>
+                    </ul>
+
+                    <hr/>
+
+                    <h3>나의 상품문의</h3>
+                    <ul>
+                        <li><a th:href="@{/mypage/product-inquiries}">나의 상품문의</a></li>
+                    </ul>
+
+                    <hr/>
+
+                    <h3>나의 상품후기</h3>
+                    <ul>
+                        <li><a th:href="@{/reviews/mine}">나의 상품후기</a></li>
+                    </ul>
+                </aside>
+                <div class="content">
+                    <div class="complete-box">
+                        <h2>1:1 문의가 등록되었습니다!</h2>
+
+                        <div class="info-line"><span>문의유형:</span><span th:text="${inquiry.inquiryType}"></span></div>
+                        <div class="info-line"><span>제목:</span><span th:text="${inquiry.title}"></span></div>
+                        <div class="info-line"><span>내용:</span><p th:text="${inquiry.content}"></p></div>
+                        <div class="info-line"><span>작성일:</span><span th:text="${inquiry.regDate}"></span></div>
+
+                        <div class="button-group">
+                            <a th:href="@{/mypage/inquiry}">
+                                <button>새로 작성하기</button>
+                            </a>
+                            <a th:href="@{/mypage/inquiry}">
+                                <button>문의 상세 보기</button>
+                            </a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+        <footer th:replace="fragments/footer :: my-footer"></footer>
+        <script th:src="@{/assets/js/logout.js}"></script>
+        </body>
+        </html>

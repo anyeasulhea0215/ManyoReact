@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/mypage.css}"/>
+    <title>마이페이지</title>
+</head>
+<body>
+
+<header th:replace="fragments/header :: my-header"></header>
+
+<main>
+    <aside>
+        <h2>마이페이지</h2>
+
+        <h3>쇼핑정보</h3>
+        <ul>
+            <li><a th:href="@{/mypage/orders}">주문목록/배송조회</a></li>
+            <li><a th:href="@{/mypage/returns}">취소/반품/교환 내역</a></li>
+            <li><a th:href="@{/mypage/refund}">환불/입금 내역</a></li>
+            <li><a th:href="@{/mypage/wishlist}">위시리스트</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>고객센터</h3>
+        <ul>
+            <li><a th:href="@{/mypage/inquiry}">1:1 문의</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>회원정보</h3>
+        <ul>
+            <li><a th:href="@{/mypage/member-edit}">회원정보 변경</a></li>
+            <li><a th:href="@{/mypage/withdraw}">회원 탈퇴</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>나의 상품문의</h3>
+        <ul>
+            <li><a th:href="@{/mypage/product-inquiries}">나의 상품문의</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>나의 상품후기</h3>
+        <ul>
+            <li><a th:href="@{/reviews/mine}">나의 상품후기</a></li>
+        </ul>
+    </aside>
+
+    <div class="content-wrapper">
+        <section class="order-list">
+            <h2>환불/입금 내역</h2>
+            <hr class="order-title-line">
+
+            <form method="get" th:action="@{/mypage/refund}">
+            <div class="order-filter-inline">
+                <div class="radio-buttons">
+                    <label><input type="radio" name="period" value="0" th:checked="${period == 0}" />오늘</label>
+                    <label><input type="radio" name="period" value="7" th:checked="${period == 7}" /> 7일</label>
+                    <label><input type="radio" name="period" value="15" th:checked="${period == 15}" /> 15일</label>
+                    <label><input type="radio" name="period" value="30" th:checked="${period == 30}" /> 1개월</label>
+                    <label><input type="radio" name="period" value="90" th:checked="${period == 90}" /> 3개월</label>
+                    <label><input type="radio" name="period" value="365" th:checked="${period == 365}" /> 1년</label>
+                </div>
+
+                <div class="date-search-group">
+                    <input type="date" name="startDate" th:value="${startDate}" />
+                    <span>~</span>
+                    <input type="date" name="endDate" th:value="${endDate}" />
+                    <button type="submit" class="btn-search">조회</button>
+                </div>
+            </div>
+        </form>
+
+            <hr class="table-top-line">
+
+            <div class="returns-tab">
+                <strong class="active">환불 신청 내역</strong>
+                <span>환불 입금 처리 현황</span>
+                <span>환불/입금 내역 총 <strong th:text="${refundList.size()}">0</strong>건</span>
+            </div>
+
+            <table class="order-table">
+                <thead>
+                <tr>
+                    <th>날짜/주문번호</th>
+                    <th>상품명/옵션</th>
+                    <th>상품금액/수량</th>
+                    <th>주문상태</th>
+                    <th>확인/리뷰</th>
+                </tr>
+                </thead>
+                 <!-- 환불 내역이 없을 때 -->
+            <tbody th:if="${#lists.isEmpty(refundList)}">
+            <tr>
+                <td colspan="5" class="no-data">조회내역이 없습니다.</td>
+            </tr>
+            </tbody>
+
+            <!-- 환불 내역이 있을 때 -->
+            <tbody th:unless="${#lists.isEmpty(refundList)}">
+            <tr th:each="item : ${refundList}">
+                <td>
+                    <span th:text="${#temporals.format(item.regDate, 'yyyy-MM-dd')}">2025-07-03</span><br/>
+                    주문번호: <span th:text="${item.orderItemId}">12345</span>
+                </td>
+                <td>
+                    <img th:src="@{${item.orderImg}}" alt="상품 이미지" style="width: 60px;" /><br/>
+                    <span th:text="${item.orderPname}">상품명</span>
+                </td>
+                <td>
+                    <span th:text="${#numbers.formatInteger(item.orderPrice, 3, 'COMMA')}">12,000</span>원<br/>
+                    <span th:text="${item.orderCount}">1</span>개
+                </td>
+                <td>환불 신청</td>
+                <td>
+                    <a href="#" class="btn-review">리뷰쓰기</a>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+<script th:src="@{/assets/js/logout.js}"></script>
+
+</body>
+</html>

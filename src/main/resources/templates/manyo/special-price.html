@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>특가 상품</title>
+    <link rel="stylesheet" th:href="@{/assets/css/best.css}" />
+    <style>
+        .main{
+        padding-top:200px;
+        background-color: #ffffff;}
+
+.content-wrapper {
+    margin-left: 40px;
+}
+
+.goods-list-top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+}
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-title {
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.arrow {
+    transition: transform 0.5s ease;
+}
+
+.dropdown-container:hover .arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 260%;
+    left: 0;
+    background-color: white;
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    z-index: 10;
+    width: 570px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu li {
+    display: inline-block;
+    padding: 8px 20px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-container:hover .dropdown-menu {
+    display: block;
+}
+
+.goods-list-sub ul {
+    display: flex;
+    gap: 50px;
+    margin: 0;
+    padding: 0;
+}
+
+.goods-list-sub ul li {
+    list-style: none;
+    font-size: 20px;
+}
+
+.goods-list-sub ul li a {
+    text-decoration: none;
+    color: rgb(172, 169, 169);
+    transition: color 0.3s;
+}
+
+.goods-list-sub ul li a:hover {
+    color: black;
+}
+
+
+
+
+    </style>
+</head>
+<body th:attr="data-user-id=${memberInfo != null ? memberInfo.id : ''}">
+<header th:replace="~{fragments/header :: my-header}"></header>
+
+<main class="main">
+    <div class="content-wrapper">
+        <div class="goods-list-top">
+            <div class="dropdown-container">
+                <div class="dropdown-title">
+                    <span style="font-size:16px;">특가</span>
+                    <span class="arrow">&#9660;</span>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a href="/special">특가</a></li>
+                    <li><a href="/best">베스트</a></li>
+                    <li><a href="/skin">피부고민별</a></li>
+                    <li><a href="/category">카테고리별</a></li>
+                    <li><a href="/line">라인별</a></li>
+                    <li><a href="/new">신상품</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <form action="/special" method="get" class="search-form">
+        <input type="text" name="keyword" placeholder="상품명을 입력하세요" th:value="${keyword}" class="search-input" />
+        <button type="submit" class="search-button">검색</button>
+    </form>
+
+    <p style="margin-left:70px;"
+       th:text="${specialProducts != null} ? ${specialProducts.size()} + '개의 상품' : '0개의 상품'">0개의 상품</p>
+
+    <div class="product-grid">
+        <div class="product" th:each="product : ${specialProducts}">
+            <div class="product-img-box">
+                <a th:href="@{/products/detail(productId=${product.productId})}">
+                    <img th:src="@{${product.productImg}}" th:alt="${product.productName}" class="product-img" />
+                </a>
+            </div>
+            <p class="product-name" th:text="${product.productName}">상품명</p>
+            <div class="price-box">
+                <span class="price-original" th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + '원'">정가</span>
+                <span class="price-sale" th:text="${#numbers.formatDecimal(product.salePrice, 0, 'COMMA', 0, 'POINT')} + '원'">할인가</span>
+                <span class="discount" th:text="${product.discount + '%'}">할인율</span>
+            </div>
+            <div class="delivery">
+                <img th:src="@{/assets/img/best_img/베스트_마법배송.png}" alt="마법배송" class="delivery-icon" />
+                <span class="arrival-date" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">도착 예정</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination-wrapper">
+        <div class="pagination">
+            <a th:href="@{/special(page=1, keyword=${keyword})}"
+               th:class="${pageHelper != null and pageHelper.nowPage == 1} ? 'page current' : 'page'">1</a>
+
+            <a th:href="@{/special(page=2, keyword=${keyword})}"
+               th:class="${pageHelper != null and pageHelper.nowPage == 2} ? 'page current' : 'page'">2</a>
+        </div>
+    </div>
+
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+
+<script th:src="@{/assets/js/logout.js}"></script>
+
+ <script th:src="@{/assets/js/RecentViewProducts.js}"></script>
+
+
+
+</body>
+</html>

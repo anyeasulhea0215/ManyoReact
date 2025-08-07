@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/mypage.css}"/>
+    <title>마이페이지</title>
+
+    <style>
+
+     .content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.content-wrapper > * {
+  margin-left: 40px;
+}
+.title {
+  width: 100%;
+  padding: 10px 0;
+  border-bottom: 2px solid #000;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+}
+.join-base-wrap {
+  width: 400px;
+  margin: 30px 0 50px 40px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="password"],
+input[type="email"],
+input[type="tel"] {
+  width: 100%;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+
+.email-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.email-wrapper input[type="email"] {
+  flex: 1;
+}
+
+.email-wrapper button {
+  white-space: nowrap;
+  padding: 0 12px;
+  height: 40px;
+  font-size: 14px;
+  background: #b9131b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+.gender-box {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.gender-box label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #888;
+  border-radius: 50%;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+
+.address-box {
+  margin-top: 20px;
+}
+
+.address-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.address-box button {
+  width: 100%;
+  background-color: #b9131b;
+  color: white;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+.input-container .btn button,
+form button[type="submit"] {
+  width: 100%;
+  background-color: #b9131b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+    .img-container {
+                display: flex;
+                align-items: center;
+
+                img {
+                    display: block;
+                    object-fit: cover;
+                    margin: 10px;
+                    border-radius: 50%;
+                    width: 100px;
+                }
+
+                label {
+                    display: block;
+                    font-size: 12px;
+                    margin: 5px 0;
+                    align-items: center;
+                }
+         }
+
+
+.user-ico {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 20px auto;
+}
+
+/* 미디어 쿼리: 화면 너비가 400px 이하일 때 */
+@media (max-width: 400px) {
+    .container {
+        width: 100%;
+        padding-left: var(--media-container-padding);
+        padding-right: var(--media-container-padding);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+   <header th:replace="fragments/header :: my-header"></header>
+
+    <main>
+        <aside>
+            <h2>마이페이지</h2>
+
+            <h3>쇼핑정보</h3>
+            <ul>
+                <li><a th:href="@{/mypage/orders}">주문목록/배송조회</a></li>
+                <li><a th:href="@{/mypage/returns}">취소/반품/교환 내역</a></li>
+                <li><a th:href="@{/mypage/refund}">환불/입금 내역</a></li>
+                <li><a th:href="@{/mypage/wishlist}">위시리스트</a></li>
+            </ul>
+
+            <hr/>
+
+            <h3>고객센터</h3>
+            <ul>
+                <li><a th:href="@{/mypage/inquiry}">1:1 문의</a></li>
+            </ul>
+
+            <hr/>
+
+            <h3>회원정보</h3>
+            <ul>
+                <li><a th:href="@{/mypage/member-edit}">회원정보 변경</a></li>
+                <li><a th:href="@{/mypage/withdraw}">회원 탈퇴</a></li>
+            </ul>
+
+            <hr/>
+
+            <h3>나의 상품문의</h3>
+            <ul>
+                <li><a th:href="@{/mypage/product-inquiries}">나의 상품문의</a></li>
+            </ul>
+
+            <hr/>
+
+            <h3>나의 상품후기</h3>
+            <ul>
+                <li><a th:href="@{/reviews/mine}">나의 상품후기</a></li>
+            </ul>
+        </aside>
+
+     <div class="content-wrapper">
+        <div class="title">
+             <h3>회원정보 변경</h3>
+        </div>
+
+       <div class="join-base-wrap">
+
+           <form id="signup-form">
+            <div class="input-container">
+                  <h4>아이디</h4>
+            <!--  회원가입때 저장된 아이디 disabled -->
+             <input  th:value="${session.memberInfo.userId}" disabled type="text" name="user_id" id="user_id" placeholder="아이디" />
+            </div>
+
+            <div class="input-container">
+                  <h4>비밀번호</h4>
+              <input  id="user_pw" name="user_pw" placeholder="현재비밀번호" type="password" />
+            </div>
+
+              <!-- 변경할 비밀번호 -->
+             <div class="input-container">
+               <h4>변경할 비밀번호</h4>
+               <input class="input-field" id="new_user_pw" name="new_user_pw" placeholder="새로운 비밀번호" type="password" />
+               <p>수정을 원하는 경우에만 입력하세요</p>
+             </div>
+
+          <!--변경할 비번 확인-->
+            <div class="input-container">
+                     <input class="input-field" id="new_user_pw_confirm" name="new_user_pw_confirm" placeholder="새로운 비밀번호 확인" type="password" />
+           </div>
+
+              <div class="input-container">
+                   <h4>이름</h4>
+              <!-- .. 회원가입때 저장된 이름 -->
+             <input class="form-field" type="text" name="user_name" id="user_name" th:value="${session.memberInfo.userName}"  />
+
+              </div>
+
+              <!-- 이메일-->
+              <div class="input-container">
+                <h4>이메일</h4>
+                 <email class="email-wrapper">
+                         <input th:value="${session.memberInfo.email}" class="input-field" id="email" name="email" placeholder="이메일" type="email" />
+                          <button class="inline-btn" id="email_unique_check" type="button">중복 검사</button>
+                 </email>
+
+               <input type="hidden" id="email_check" name="email_check" value="Y" />
+            </div>
+
+             <div class="input-container">
+                   <h4>휴대폰번호</h4>
+              <!-- ..회원가입때 저장된 전화번호-->
+             <input  th:value="${session.memberInfo.phone.replace('-','')}" class="input-field" id="phone" name="phone" placeholder="전화번호" type="tel" />
+             </div>
+
+              <div class="checkbox-inline input-container">
+
+                <input type="checkbox" name="isSmsAgree" value="Y" th:checked="${session.memberInfo.isSmsAgree == 'Y'}" />
+                <label>
+                   정보/이벤트 SMS 수신에 동의합니다
+                </label>
+
+             </div>
+
+
+              <!-- 생년월일 -->
+          <div class="input-container">
+              <h4>생년월일</h4>
+               <input th:value="${session.memberInfo.birthday}" class="input-field" id="birthday" name="birthday" placeholder="생년월일" type="date" />
+          </div>
+
+       <!-- 성별 -->
+      <div class="input-container">
+        <h4>성별</h4>
+            <div class="gender-box">
+                   <label class="gender-label">
+             <input th:checked="${session.memberInfo.gender == 'M'}" class="gender-input" name="gender" type="radio" value="M" />
+               <span class="gender-custom">남성</span>
+          </label>
+            <label class="gender-label">
+                  <input th:checked="${session.memberInfo.gender =='F'}" class="gender-input" name="gender" type="radio" value="F" />
+                    <span class="gender-custom" >여성</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 주소 -->
+          <div class="address-box">
+            <label>
+                  <input th:value="${session.memberInfo.postcode}" class="input-field" id="postcode" name="postcode" placeholder="우편번호" readonly type="text" />
+                  <button class="btn" id="find-postcode" type="button">우편번호 검색</button>
+            </label>
+
+            <label>
+               <input th:value="${session.memberInfo.addr1}" class="input-field" id="addr1" name="addr1" placeholder="주소" readonly type="text" />
+            </label>
+
+            <label>
+                   <input th:value="${session.memberInfo.addr2}" class="input-field" id="addr2" name="addr2" placeholder="상세 주소" type="text" value="테헤란로4길" />
+            </label>
+        </div>
+
+          <!-- 사진 -->
+    <div class="input-container">
+        <h4>프로필 사진 등록</h4>
+        <th:block th:if="${session.memberInfo.photo == null or session.memberInfo.photo == ''}">
+             <input class="input-field" id="photo" name="photo" type="file" />
+        </th:block>
+
+        <th:block th:unless="${session.memberInfo.photo == null or session.memberInfo.photo == ''}">
+             <input class="input-field" id="photo" name="photo" type="file" disabled />
+             <div class="img-container">
+                 <img th:src="${@fileHelper.getFileUrl(session.memberInfo.photo)}" class="user-ico">
+                 <div>
+                     <p th:text="${session.memberInfo.photo + '가 등록되었습니다'}"></p>
+                     <label>
+                         <input type="checkbox" name="delete_photo" id="delete_photo" value="Y" data-disabled="#photo" />
+                         삭제
+                     </label>
+                 </div>
+             </div>
+        </th:block>
+    </div>
+
+      <button class="btn" type="submit">정보수정</button>
+
+   <div class="form-footer">
+     <p><a th:href="@{/login/out}">회원탈퇴</a></p>
+   </div>
+
+        </form>
+
+       </div>
+
+     </div>
+
+   </main>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+<script th:src="@{/assets/js/logout.js}"></script>
+
+<th:block th:replace="~{_fragments/_scripts :: my-scripts}"></th:block>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+
+ document.querySelectorAll("*[data-disabled]").forEach((v,i)=>{
+    v.addEventListener("change", e=>{
+        e.preventDefault();
+
+        const current=e.currentTarget;
+        document.querySelector(current.dataset.disabled).disabled = !current.checked;
+    });
+ });
+
+    /*우편번호 검색 이벤트*/
+     document.querySelector("#find-postcode").addEventListener("click",async (e)=>{
+        e.preventDefault();
+        utilHelper.findPostCode();
+     });
+
+
+
+  // 이메일 중복 확인
+  document.querySelector('#email_unique_check').addEventListener('click', async (e) => {
+
+  e.preventDefault();
+
+    try {
+         regexHelper.value("#email","이메일을 입력하세요");
+    } catch (e) {
+
+        await utilHelper.alertDanger(e.message);
+
+        setTimeout(()=> e.element.focus(),1);
+       return;
+    }
+
+    try{
+        //중복 이메일 검사 ->사용  가능 이메일 :정상종료/사용불가: 예외발생
+        await fetchHelper.get(`/api/account/email_unique_check`,{
+            email:document.querySelector("#email").value
+        });
+    } catch(e){
+            await utilHelper.alertDanger(e.message);
+
+            setTimeout(()=> e.element.focus(),1);
+            return;
+    }
+
+    await utilHelper.alertSuccess("사용가능한 이메일");
+    document.querySelector("#email_check").value="Y";
+  });
+
+
+  /* 이메일에 대한 입력값이 변경되는 경우 발생하는 이벤트*/
+  document.querySelector('#email').addEventListener('change', () => {
+
+    document.querySelector('#email_check').value = 'N';
+  });
+
+
+ /** 회원가입 폼 submit 이벤트 */
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  try {
+    /** 입력값 유효성 검사 */
+
+    //아이디에 대한 유효성 검사 루틴 제거
+
+
+    regexHelper.value('#user_pw', ' 현재 비밀번호를 입력해주세요.');
+
+    //변경할 비밀번호와 변경할 비밀번호의 확인값
+    const newUserPw=document.querySelector("#new_user_pw").value;
+    const newUserPwConfirm=document.querySelector("#new_user_pw_confirm").value;
+
+    //새로운 비밀번호가 입력되었ㅇ르때만 확인값 검사
+    if(newUserPw || newUserPwConfirm){
+        regexHelper.compareTo("#new_user_pw","#new_user_pw_confirm","비밀번호 확인이 잘못되었습니다");
+
+    }
+
+    regexHelper.value('#user_name', '이름을 입력해주세요.');
+    regexHelper.kor('#user_name', '이름은 한글만 입력 가능합니다.');
+    regexHelper.maxLength("#user_name",20,"이름은 2자 이상 20자 이하로 입력하세요");
+    regexHelper.minLength("#user_name",2,"이름은 2자 이상 20자 이하로 입력하세요");
+
+    regexHelper.value('#email', '이메일을 입력해주세요.');
+    regexHelper.email('#email', '이메일 형식이 잘못되었습니다.');
+
+    regexHelper.value('#phone', '전화번호를 입력해주세요.');
+    regexHelper.phone('#phone', '전화번호 형식이 잘못되었습니다.');
+
+    regexHelper.value('#birthday', '생년월일을 입력해주세요.');
+
+    regexHelper.check('.gender-input', '성별을 선택해주세요.');
+
+    regexHelper.value('#postcode', '우편번호를 입력해주세요.');
+    regexHelper.maxLength('#postcode', 5, '우편번호는 최대 5자리입니다.');
+    regexHelper.minLength('#postcode', 5, '우편번호는 5자리를 입력해야 합니다.');
+
+    regexHelper.value('#addr1', '주소를 입력해주세요.');
+    regexHelper.value('#addr2', '상세주소를 입력해주세요.');
+  } catch (e) {
+
+    await utilHelper.alertDanger(e.message);
+
+   setTimeout(()=>e.element.focus(), 1);  //팝업 애니메이션이 종료되는 동안 약간의 딜레이 필요
+    return;
+  }
+
+
+  /**  이메일 중복체크 여부 확인 */
+
+  const emailCheck = document.querySelector('#email_check').value;
+
+  if (emailCheck === "N") {
+     utilHelper.alertWarning("이메일 중복 검사를 진행해주세요.");
+    return;
+  }
+
+  /** <form> 태그 내 모든 요소를 Ajax 요청 가능한 객체로 변환 */
+  const formData = new FormData(e.currentTarget);
+
+  // Ajax 전송 - 회원가입 처리
+  try {
+     data = await fetchHelper.put("[[@{/api/account/edit}]]", formData);  //서버에 update요청
+
+  } catch (e) {
+    console.log(e);
+    await utilHelper.alertDanger(e.message);
+    return;
+  }
+    // 회원가입 성공 시 결과 페이지로 이동
+    window.location = "[[@{/account}]]";
+});
+
+</script>
+</body>
+
+</html>

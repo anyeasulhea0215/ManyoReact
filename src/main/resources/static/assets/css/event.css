@@ -1,0 +1,101 @@
+.event-main {
+  padding: 100px 80px;
+  font-family: 'Noto Sans KR', sans-serif;
+   padding-top: 180px;
+}
+
+.event-title h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.tab-menu {
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+}
+
+.tab-menu span {
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+}
+
+.tab-menu .active {
+  color: #111;
+  font-weight: bold;
+}
+
+.tab-divider {
+  margin: 10px 0 30px;
+  border: none;
+  border-top: 2px solid #111;
+  width: 100%;
+}
+
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2열 그리드 */
+  grid-template-rows: auto auto; /* 두 줄로 구성 */
+  gap: 60px 80px;
+   max-width: 1000px;         /* 💡 최대 너비 제한 */
+  margin: 0 auto;            /* 💡 가운데 정렬 */
+  padding: 0 20px;           /* 💡 양옆 여백 */
+}
+.event-item:nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+.event-item:nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+.event-item:nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+.event-item {
+   width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+  object-fit: cover;
+}
+
+.event-item h3 {
+  font-size: 24px;
+  margin: 20px 0 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.event-item p {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.page {
+  font-size: 16px;
+  color: #999;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.page.active {
+  color: #b60217;
+  font-weight: bold;
+  border-bottom: 2px solid #b60217;
+}

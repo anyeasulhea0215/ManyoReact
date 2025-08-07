@@ -1,0 +1,39 @@
+@startuml
+skinparam dpi 200
+
+class Product {
+  - productId: int
+  - categoryId: Integer
+  - bestId: int
+  - productName: String
+  - productPrice: int
+  - salePrice: int
+  - discount: int
+  - regDate: String
+  - editDate: String
+  - productImg: String
+  - listCount: int
+  - offset: int
+
+  + Product()
+}
+
+class ProductInquiry {
+  - inquiryId: int
+  - memberId: int
+  - inquiryType: String
+  - title: String
+  - content: String
+  - answer: String
+  - attachedFileUrl: String
+  - regDate: LocalDateTime
+  - answerDate: LocalDateTime
+  - isAnswered: String
+  - productId: Integer
+
+  + ProductInquiry()
+}
+
+ProductInquiry "1" --> "1" Product : HasA
+
+@enduml

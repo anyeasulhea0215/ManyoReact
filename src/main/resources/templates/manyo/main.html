@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.8/glider.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.8/glider.min.js"></script>
+</head>
+<body th:attr="data-user-id=${memberInfo != null ? memberInfo.id : ''}">
+
+<header th:replace="fragments/header :: my-header"></header>
+
+<div class="visual">
+    <button class="glider-prev" data-target="bannerSlider">〈</button>
+    <button class="glider-next" data-target="bannerSlider">〉</button>
+
+    <div class="glider" id="bannerSlider">
+        <div><img th:src="@{/assets/img/banner.jpg}" alt="배너이미지1"></div>
+        <div><img th:src="@{/assets/img/banner1.jpg}" alt="배너이미지2"></div>
+        <div><img th:src="@{/assets/img/banner3.jpg}" alt="배너이미지3"></div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="bestseller">
+        <h2>best sellers :</h2>
+        <a th:href="@{/products}">
+            <button class="all">전체보기</button></a>
+    </div>
+
+    <div class="menu-wrapper">
+        <div class="menu">
+            <a th:href="@{/products}">전체</a>
+            <a th:href="@{/products(categoryId=1)}">클렌징</a>
+            <a th:href="@{/products(categoryId=2)}">토너 패드 미스트</a>
+            <a th:href="@{/products(categoryId=3)}">앰플 에센스 오일</a>
+            <a th:href="@{/products(categoryId=4)}">로션 크림 아이크림</a>
+            <a th:href="@{/products(categoryId=6)}">마스크 팩</a>
+            <a th:href="@{/products(categoryId=7)}">헤어 바디</a>
+        </div>
+    </div>
+
+       <div class="bestsellerphoto">
+    <div class="photo">
+        <a th:href="@{/products/detail(productId=1)}"  class="recent-track">
+            <img th:src="@{/assets/img/best1.png}" alt="베스트셀러1" />
+            <p class="title">[민들레마음] 퓨어 클렌징 오일 200ml
+                X2 더블세트</p>
+        </a>
+        <div class="price">
+            <p class="original">58,000원</p>
+            <div class="price1">
+                <p class="sale">27,800원</p>
+                <p class="discount">52%</p>
+            </div>
+        </div>
+        <div class="delivery">
+            <span class="express">마법배송</span>
+            <span class="arrival" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">내일 도착 예정</span>
+        </div>
+    </div>
+
+    <div class="photo">
+        <a th:href="@{/products/detail(productId=79)}"  class="recent-track">
+            <img th:src="@{/assets/img/best2.png}" alt="베스트셀러2" />
+            <p class="title">[민들레마음]히알루론 하이드레이팅<br>선크림 50mlX2 더블세트(+증정)</p>
+        </a>
+        <div class="price">
+            <p class="original">52,000원</p>
+            <div class="price1">
+                <p class="sale">24,900원</p>
+                <p class="discount">52%</p>
+            </div>
+        </div>
+        <div class="delivery">
+            <span class="express">마법배송</span>
+            <span class="arrival" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">내일 도착 예정</span>
+        </div>
+    </div>
+
+    <div class="photo">
+        <a th:href="@{/products/detail(productId=39)}" class="recent-track">
+            <img th:src="@{/assets/img/best3.png}" alt="베스트셀러3" />
+            <p class="title">[민트페어] 비피다 바이오 콤플렉스<br>앰플 50mlX2 더블세트(+증정)</p>
+        </a>
+        <div class="price">
+            <p class="original">70,000원</p>
+            <div class="price1">
+                <p class="sale">31,900원</p>
+                <p class="discount">54%</p>
+            </div>
+        </div>
+        <div class="delivery">
+            <span class="express">마법배송</span>
+            <span class="arrival" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">내일 도착 예정</span>
+        </div>
+    </div>
+
+    <div class="photo">
+        <a th:href="@{/products/detail(productId=4)}" class="recent-track">
+            <img th:src="@{/assets/img/best4.png}" alt="베스트셀러4" />
+            <p class="title">[민들레마음] 퓨어&딥 클렌징 폼<br>200X2 더블세트(+증정)</p>
+        </a>
+        <div class="price">
+            <p class="original">36,000원</p>
+            <div class="price1">
+                <p class="sale">17,200원</p>
+                <p class="discount">52%</p>
+            </div>
+        </div>
+        <div class="delivery">
+            <span class="express">마법배송</span>
+            <span class="arrival" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">내일 도착 예정</span>
+        </div>
+    </div>
+</div>
+</div>
+
+
+    <div class="content2">
+    <div class="content2left">
+        <div class="title2">
+            <p class="title2p">내 피부에 꼭 맞는 맞춤 선케어</p>
+            <p class="title2p2">June 2025</p>
+        </div>
+        <div class="content2photo">
+            <a th:href="@{/products/detail(productId=76)}"  class="recent-track">
+                <img th:src="@{/assets/img/content2img.jpg}" alt="선크림모델" />
+                <h2>파데한 듯 안 한 듯 생기톤업 선크림</h2>
+                <p>파데프리 선크림 모이스처</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="content2right">
+        <div class="side-text">
+            <div class="side-text">
+                <p class="tag">#깃털 밀착</p>
+                <p class="tag">#산뜻 촉촉</p>
+                <p class="side1">촉촉하지만 가벼운 <br>수분 밀착 선크림</p>
+                <p class="side2">히알루론 하이드레이팅 선크림</p>
+            </div>
+        </div>
+        <a th:href="@{/products/detail(productId=82)}"  class="recent-track">
+            <img th:src="@{/assets/img/content2-1.jpg}" class="content2-1" alt="선크림" /></a>
+    </div>
+</div>
+
+<div class="content3">
+    <button class="glider-prev" data-target="bannerSlider2">〈</button>
+    <button class="glider-next" data-target="bannerSlider2">〉</button>
+
+    <div class="glider" id="bannerSlider2">
+        <div class="slide">
+            <a th:href="@{/manyo/event}">
+                <img th:src="@{/assets/img/content3-1.jpg}" alt="배너1" />
+            </a>
+        </div>
+        <div class="slide">
+            <a th:href="@{/manyo/event}">
+                <img th:src="@{/assets/img/content3-2.jpg}" alt="배너2" />
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="content4">
+    <div class="event">
+        <h2>event : </h2>
+        <a th:href="@{/manyo/event}">
+            <button class="all">전체보기</button>
+        </a>
+</div>
+
+    <div class="visual">
+        <button class="glider-prev" data-target="bannerSlider3">〈</button>
+        <button class="glider-next" data-target="bannerSlider3">〉</button>
+
+        <div class="glider" id="bannerSlider3">
+            <div>
+                <a th:href="@{/manyo/event}">
+                    <img th:src="@{/assets/img/banner.jpg}" alt="배너이미지1" class="eventbanner" /></a>
+                <h2>피부 날씨 맑음 </h2>
+                <p>Perfect Galac! </p> <p class="gray">2025.06.16 10.00am - 07.31 11:55 pm </p>
+          </div>
+            <div>
+                <img th:src="@{/assets/img/banner1.jpg}" alt="배너이미지2" class="eventbanner" />
+                <h2>마음작가들의 한여름 꿈</h2>
+                <p>마녀공장X민들레마음 여름 에디션</p>
+                <p class="gray">2025.06.2 10.00am - 06.31 11:55 pm </p>
+            </div>
+            <div>
+                <img th:src="@{/assets/img/banner3.jpg}" alt="배너이미지3" class="eventbanner" />
+                <h2>쏟아지는 혜택</h2>
+                <p>마녀공장 카카오 플친 추가시 2천원 할인 쿠폰 증정 </p>
+                <p class="gray">2025.06.2 10.00am - 07.3 11:55 pm </p>
+    </div>
+        </div>
+    </div>
+    <div class="new">
+        <div class="newtext">
+            <h2>new :</h2>
+            <a th:href="@{/products}">
+                <button class="all">전체보기</button></a>
+        </div>
+        <h1>로터스 포어 쿨링 3종</h1>
+        <h1>#모공  #쿨링</h1>
+        <p>여름철 늘어진 모공엔 모공열감 DOWN</p>
+        <p>피부 온도케어 시작!</p>
+        <div class="newbox">
+            <div class="new1">
+                <a th:href="@{/products/detail(productId=43)}" class="recent-track">
+                    <img class="newphoto"  th:src="@{/assets/img/new1.png}" alt="크림"></a>
+                <p>로터스 포어 타이트닝 세럼 55ml(+증정)</p>
+                <span class="italy">Lotus Pore Tightening Serum</span>
+            </div>
+            <div class="new1">
+                <a th:href="@{/products/detail(productId=88)}"  class="recent-track">
+                    <img class="newphoto" th:src="@{/assets/img/new2.png}" alt="마스크팩"></a>
+                <p>로터스 포어 타이트닝 마스크 팩(+증정)</p>
+                <span class="italy">Lotus Pore Tightening MaskPack</span>
+            </div>
+            <div class="new1">
+                <a th:href="@{/products/detail(productId=81)}" class="recent-track">
+                    <img class="newphoto" th:src="@{/assets/img/new3.png}" alt="선크림"></a>
+                <p>로터스 포어 타이트닝 선크림 55ml(+증정)</p>
+                <span class="italy">Lotus Pore Tightening Suncream</span>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="m_rolling">
+        <ul>
+            <li><span class="nomina">as you wish</span><span class="stroma"> skin wizard</span></li>
+            <li><span class="nomina"><img src="https://manyo08552.cdn-nhncommerce.com/img/main/manyo_txt.png" alt="manyo"></span></li>
+            <li><span>피부 고민, 원하는대로 스킨 위저드 마녀공장</span></li>
+            <li><span class="nomina">as you wish</span><span class="stroma"> skin wizard</span></li>
+            <li><span class="nomina"><img src="https://manyo08552.cdn-nhncommerce.com/img/main/manyo_txt.png" alt="manyo"></span></li>
+            <li><span>피부 고민, 원하는대로 스킨 위저드 마녀공장</span></li>
+            <li><span class="nomina">as you wish</span><span class="stroma"> skin wizard</span></li>
+            <li><span class="nomina"><img src="https://manyo08552.cdn-nhncommerce.com/img/main/manyo_txt.png" alt="manyo"></span></li>
+            <li><span class="nomina">as you wish</span><span class="stroma"> skin wizard</span></li>
+            <li><span class="nomina"><img src="https://manyo08552.cdn-nhncommerce.com/img/main/manyo_txt.png" alt="manyo"></span></li>
+            <li><span>피부 고민, 원하는대로 스킨 위저드 마녀공장</span></li>
+            <li><span class="nomina">as you wish</span><span class="stroma"> skin wizard</span></li>
+            <li><span class="nomina"><img src="https://manyo08552.cdn-nhncommerce.com/img/main/manyo_txt.png" alt="manyo"></span></li>
+            <li><span>피부 고민, 원하는대로 스킨 위저드 마녀공장</span></li>
+        </ul>
+    </section>
+    <div class="brandstory">
+        <div class="story">
+            <h2>brand :</h2>
+            <p>
+                마녀공장을 만나는 순간<br>
+                시작되는 새로운 당신
+            </p>
+            <a th:href="@{/manyo/global_partners}">
+                <button class="all">전체보기</button></a>
+        </div>
+        <div class="storyphoto">
+            <div class="photo-wrapper">
+                <a th:href="@{/manyo/brand-story}">
+                <img th:src="@{/assets/img/story1.jpg}" alt="브랜드1" class="main-img" />
+                <img th:src="@{/assets/img/story3.png}" alt="마녀공장" class="overlay-logo" />
+                    <p class="overlay-text">브랜드 스토리</p></a>
+            </div>
+            <div class="photo-wrapper">
+                <a th:href="@{/manyo/brand-story}">
+                <img th:src="@{/assets/img/story2.jpg}" alt="브랜드2" class="main-img" />
+                <img th:src="@{/assets/img/story3.png}" alt="마녀공장" class="overlay-logo" />
+                    <p class="overlay-text">성분과학</p></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script th:src="@{/assets/js/logout.js}"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.glider').forEach(gliderElement => {
+                const gliderInstance = new Glider(gliderElement, {
+                    slidesToShow: gliderElement.id === "bannerSlider3" ? 1.5 : 1,
+                    slidesToScroll: 1,
+                    draggable: true,
+                    rewind: true,
+                    duration: gliderElement.id === "bannerSlider3" ? 0.3 : 0.7,
+                    scrollLock: true,
+                    arrows: {
+                        prev: document.querySelector(`.glider-prev[data-target="${gliderElement.id}"]`),
+                        next: document.querySelector(`.glider-next[data-target="${gliderElement.id}"]`)
+                    }
+                });
+
+                setInterval(() => {
+                    gliderInstance.scrollItem('next');
+                }, 3000);
+            });
+        });
+    </script>
+
+    <script>
+
+     document.addEventListener('DOMContentLoaded', () => {
+  const userId = document.body.dataset.userId;
+  if (!userId) return;
+
+  const storageKey = `recentProducts_${userId}`;
+
+  document.querySelectorAll('.recent-track').forEach(link => {
+    link.addEventListener('click', () => {
+      const href = link.getAttribute('href');
+      const urlParams = new URLSearchParams(href.split('?')[1]);
+      const productId = urlParams.get('productId');
+      if (!productId) return;
+
+      const img = link.querySelector('img')?.getAttribute('src') || '';
+
+      // 상품명 추출
+      let name =
+        link.querySelector('.title')?.textContent.trim() ||
+        link.querySelector('h2')?.textContent.trim() ||
+        link.querySelector('p')?.textContent.trim() ||
+        '';
+
+      let recent = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+      recent = recent.filter(p => p.id !== productId);
+      recent.unshift({ id: productId, img, name, time: new Date().getTime() });
+
+      localStorage.setItem(storageKey, JSON.stringify(recent.slice(0, 5)));
+    });
+  });
+});
+    </script>
+    </div>
+</body>
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</html>

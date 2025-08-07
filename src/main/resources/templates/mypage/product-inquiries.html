@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1대1문의</title>
+    <style>
+
+        body {
+
+          margin: 0;
+          font-family: 'Noto Sans KR', sans-serif;
+          background-color: #fff;
+          color: #222;
+          overflow-x: hidden;
+        }
+
+        main {
+           display: flex;
+          flex-direction: row;
+          width: 100%;
+          box-sizing: border-box;
+          margin-top: 150px;
+          margin-left: 10%;
+        }
+
+        aside {
+  width: 220px;
+  flex-shrink: 0;
+  margin-left: 40px;
+}
+
+aside h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+aside h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+aside ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+aside li {
+  margin: 6px 0;
+}
+
+aside a {
+  text-decoration: none;
+  color: #888;
+  font-size: 14px;
+}
+
+aside a:hover {
+  color: #111;
+  font-weight: 500;
+}
+
+aside hr {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+
+
+        .hrh2{
+            width:1200px;
+            margin-bottom:50px;
+            border:none;
+            height:3px;
+            background-color: #4b4b4b;
+
+        }
+        label{
+            padding-right:30px;
+            font-weight:bold;
+            font-size: 18px;
+            padding-top: 50px;
+
+        }
+        .formgroup {
+            margin-bottom: 20px;
+            margin-left:35px;
+        }
+
+        #inquiryType, #title {
+            width:1000px;
+            height: 40px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;}
+
+        #title{
+            width: 980px;
+            height: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+
+        }
+        #writer {
+            border:none;
+        }
+        .contentspan{
+            font-size: 14px;
+            color: gray;
+             margin-left: 10px;
+        }
+        textarea#formcontent {
+          width: 1030px;
+          height: 200px;
+          padding: 20px;
+          margin-left:75px;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          resize: vertical;
+          font-size: 14px;
+          box-sizing: border-box;
+          margin-top: 8px;
+        }
+        .formgroup.buttons {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+
+        }
+
+        #deleteBtn, #submitBtn {
+        margin-top: 20px;
+        margin-bottom:50px;
+        padding: 10px 40px;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;}
+
+        #deleteBtn {
+            border: none;
+            color: #fff;
+            background-color:rgb(168, 37, 37);
+        }
+        #submitBtn {
+            border:1px solid rgb(168, 37, 37);
+            background-color: #fff;
+            color: rgb(168, 37, 37);}
+
+            select {
+            width: 1000px;
+            height: 45px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            font-size: 16px;
+            font-family: 'Noto Sans KR', sans-serif;
+            appearance: none; 
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' width='14' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 50 l60 60 60-60' stroke='%23999' stroke-width='20' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+        }
+
+        select:focus {
+            border-color: rgb(168, 37, 37);
+            outline: none;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<header th:replace="fragments/header :: my-header"></header>
+
+<main>
+    <aside>
+        <h2>마이페이지</h2>
+
+        <h3>쇼핑정보</h3>
+        <ul>
+            <li><a th:href="@{/mypage/orders}">주문목록/배송조회</a></li>
+            <li><a th:href="@{/mypage/returns}">취소/반품/교환 내역</a></li>
+            <li><a th:href="@{/mypage/refund}">환불/입금 내역</a></li>
+            <li><a th:href="@{/mypage/wishlist}">위시리스트</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>고객센터</h3>
+        <ul>
+            <li><a th:href="@{/mypage/inquiry}">1:1 문의</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>회원정보</h3>
+        <ul>
+            <li><a th:href="@{/mypage/member-edit}">회원정보 변경</a></li>
+            <li><a th:href="@{/mypage/withdraw}">회원 탈퇴</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>나의 상품문의</h3>
+        <ul>
+            <li><a th:href="@{/mypage/product-inquiries}">나의 상품문의</a></li>
+        </ul>
+
+        <hr/>
+
+        <h3>나의 상품후기</h3>
+        <ul>
+            <li><a th:href="@{/reviews/mine}">나의 상품후기</a></li>
+        </ul>
+    </aside>
+
+    <div class="content">
+        <div class="content1">
+            <h2>나의 상품 문의</h2>
+            <hr class="hrh2">
+        </div>
+
+        <form th:action="@{/mypage/product-inquiries}" method="post" enctype="multipart/form-data">
+       <div class="formgroup">
+            <label for="inquiryType">문의유형</label>
+            <select id="inquiryType" name="inquiryType">
+                <option value="상품 문의">상품 문의</option>
+                <option value="주문/취소 문의">주문/취소 문의</option>
+                <option value="배송 문의">배송 문의</option>
+                <option value="교환/반품 문의">교환/반품 문의</option>
+                <option value="기타 문의">기타 문의</option>
+            </select>
+        </div>
+
+        <div class="formgroup">
+            <label for="productId">상품 선택</label>
+            <select id="productId" name="productId">
+                <option value="">상품을 선택해주세요</option>
+                <option th:each="product : ${productList}"
+                        th:value="${product.productId}"
+                        th:text="${product.productName}">
+                </option>
+            </select>
+        </div>
+
+        <div class="formgroup">
+            <label for="writer">작성자</label>
+            <input type="text" id="writer" name="writer"  th:value="${session.memberInfo.userName}" />
+        </div>
+        <div class="formgroup">
+            <label for="title">문의 제목</label>
+            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요"/>
+        </div>
+        <div class="formgroup">
+            <label for="formcontent" style="display: flex; align-items: center;">
+                문의 내용
+                <span class="contentspan">해당글은 비밀글로만 작성 됩니다</span>
+            </label>
+            <textarea id="formcontent" name="content" placeholder="문의 내용을 입력해주세요"></textarea>
+
+        </div>
+        <div class="formgroup">
+            <label for="file">첨부파일</label>
+            <input type="file" id="file" name="file">
+        </div>
+        <div class="formgroup buttons">
+            <button type="reset" id="deleteBtn">이전</button>
+            <button type="submit" id="submitBtn">저장</button>
+        </div>
+        </form>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+<script th:src="@{/assets/js/logout.js}"></script>
+</body>
+</html>

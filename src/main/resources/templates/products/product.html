@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>상품목록</title>
+    <style>
+        .category-container {
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 10px;
+          padding-right:50px;
+          margin-top: 200px;
+          margin: 0 auto;
+          width: fit-content;
+          margin-top:200px;
+          margin-bottom:500px;
+  }
+
+       .category-title {
+        font-weight: 500;
+        cursor: pointer;
+         position: relative;
+         user-select: none;
+         padding-right:50px;
+
+
+          }
+
+          .category-title > span {
+              display: flex;
+              align-items: center;
+          }
+
+          .dropdown-icon {
+              font-size: 12px;
+              margin-left: 5px;
+          }
+
+
+          .dropdown-menu {
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background: white;
+              border: 1px solid #ddd;
+              box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+              display: none;
+              margin-top: 5px;
+              padding: 5px 0;
+              min-width: 150px;
+              z-index: 100;
+          }
+
+
+          .dropdown-menu li {
+              list-style: none;
+              padding: 8px 15px;
+              font-size: 14px;
+              color: #333;
+              white-space: nowrap;
+          }
+
+          .dropdown-menu li:hover {
+              background-color: #f0f0f0;
+          }
+
+
+          .category-title:hover .dropdown-menu {
+              display: block;
+          }
+
+          .category-menu a {
+              margin-right: 40px;
+              text-decoration: none;
+              color: #999;
+              font-size: 14px;
+
+          }
+
+          .category-menu a:hover {
+              color: black;
+          }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: my-header}"></div>
+
+<div class="category-container">
+    <div class="category-title">
+        <span>카테고리별 <span class="dropdown-icon">▼</span></span>
+        <ul class="dropdown-menu">
+            <a href="#"><li>특가</li></a>
+            <a href="#"><li>베스트</li></a>
+            <a href="#"><li>피부 고민별</li></a>
+            <a href="#"><li>카테고리별</li></a>
+            <a href="#"><li>라인별</li></a>
+            <a href="#"><li>신상품</li></a>
+            <a href="#"><li>아워비건</li></a>
+        </ul>
+    </div>
+
+    <div class="category-menu">
+        <a href="#">클렌징</a>
+        <a href="#">토너,패드,미스트</a>
+        <a href="#">앰플,에센스</a>
+        <a href="#">로션,크림,아이크림</a>
+        <a href="#">썬,메이크업</a>
+        <a href="#">마스크,팩</a>
+        <a href="#">헤어,바디</a>
+        <a href="#">립,핸드</a>
+        <a href="#">남성</a>
+    </div>
+</div>
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</body>
+</html>

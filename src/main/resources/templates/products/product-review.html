@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${product.productName}">상품 상세 페이지</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .detail-header {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        margin-left: 20px;
+        border-bottom:2px solid transparent;
+        text-decoration:none;
+
+        a{
+            &:nth-child(2){
+                font-weight: 700;
+            }
+        }
+    }
+
+    .detail-header a.active,
+     .detail-header a:active{
+      color: #d60000;
+      border-bottom: 2px solid #d60000;
+      font-weight: bold;
+
+    }
+
+    .wish {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .share-icon, .wishlist-icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
+
+    .price-info {
+        background-color: #f8f8f8;
+        padding: 25px;
+        border-radius: 8px;
+    }
+
+    .product-container {
+        display: flex;
+        max-width: 1200px;
+        margin: 200px auto;
+        padding: 0 20px;
+    }
+
+    .product-image {
+    flex: 1;
+    position: relative;
+    height: 700px;
+    background-color: #eee;
+    display: block;
+}
+
+  .product-image img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100%;
+      max-height: 100%;
+  }
+
+    .product-info {
+        flex: 1;
+        padding-left: 40px;
+    }
+
+    .product-info h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #888;
+    }
+
+    .product-info h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .cupon {
+        border-radius: 5px;
+        border: none;
+        padding: 5px 15px;
+        font-size: 10px;
+        margin-left: 20px;
+        background-color: #555555;
+        color: #fff;
+        cursor: pointer;
+    }
+
+
+    .review-box {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.total-review .count {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.rating-breakdown ul {
+    list-style: none;
+    padding: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.each-review .review-item {
+    padding: 15px 0;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-img {
+    max-width: 300px;
+    max-height: 200px;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: my-header}"></div>
+
+<main class="product-container">
+  <!-- 상품 이미지 영역 -->
+  <div class="product-image">
+    <img th:src="@{${product.productImg}}" alt="상품 이미지" />
+  </div>
+
+  <!-- 상품 정보 영역 -->
+  <div class="product-info">
+      <div class="detail-header">
+          <a th:href="@{/products/detail(productId=${product.productId})}"
+             th:classappend="${activeTab} == 'detail' ? 'active' : ''" class="tab-link">상품설명</a>
+          <a th:href="@{/products/product-review(productId=${product.productId})}"
+             th:classappend="${activeTab} == 'review' ? 'active' : ''" class="tab-link">리뷰</a>
+          <a th:href="@{/products/product-inquiry(productId=${product.productId})}"
+             th:classappend="${activeTab} == 'inquiry' ? 'active' : ''">문의</a>
+
+      </div>
+
+
+    <div class="wish">
+      <h3 th:text="${product.productName}">상품명</h3>
+
+      <div class="icon-group">
+        <img th:src="@{/assets/img/공유.png}" alt="공유" class="share-icon" />
+
+        <form th:action="@{/mypage/add}" method="post" style="display:inline;">
+          <input type="hidden" name="productId" th:value="${product.productId}" />
+
+          <button type="submit" style="border:none; background:none; padding:0; cursor:pointer;">
+            <img th:src="@{/assets/img/위시리스트.png}" alt="위시리스트" class="wishlist-icon" />
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="review-box">
+
+        <div class="total-review">
+            <div class="count">
+              <span><i class="fas fa-star" style="color: #d60000;"></i></span>
+              <strong th:text="${#numbers.formatDecimal(avgRating, 1, 1)}">0.0</strong>
+            </div>
+        <div class="rating-breakdown">
+            <ul>
+                <li th:each="entry : ${ratingCountMap}">
+                    <!-- <span th:text="${entry.key} + '★'" style="color: #d60000;">별점</span>-->
+                       <span th:switch="${entry.key}" style="color: #d60000;">
+                              <span th:case="5">아주 좋아요</span>
+                              <span th:case="4">적당히 좋아요</span>
+                             <span th:case="3">그냥 그래요</span>
+                            <span th:case="2">별로예요</span>
+                            <span th:case="1">아주 별로예요</span>
+                           <span th:case="*">기타</span>
+                       </span>
+                    <span th:text="${entry.value} + '명'">0명</span>
+                </li>
+            </ul>
+         </div>
+        </div>
+
+        <div class="each-review">
+            <div th:each="review : ${reviews}" class="review-item">
+             <div class="review-header">
+            <h4 th:text="${review.title}">리뷰 제목</h4>
+            <span class="rating">
+            <span th:each="i : ${#numbers.sequence(1, review.rating)}">  <i class="fas fa-star" style="color: #d60000;"></i></span>
+            </span>
+            </div>
+
+            <p th:text="${review.content}">리뷰 내용</p>
+            <div th:if="${review.imageUrl != null}">
+                <img th:src="@{${review.imageUrl}}" alt="리뷰 이미지" class="review-img" />
+            </div>
+            <hr />
+            <small th:text="${#temporals.format(review.regDate, 'yyyy.MM.dd HH:mm')}"></small>
+                <form th:action="@{/products/review-like}" method="post" style="display:inline;">
+                    <input type="hidden" name="reviewId" th:value="${review.reviewId}" />
+                    <button type="submit">❤️ 좋아요 (<span th:text="${review.likeCount}">0</span>)</button>
+                </form>
+
+                <div th:each="comment : ${review.comments}">
+                    <p>
+                        <strong th:text="${comment.memberName}">작성자</strong>:
+                        <span th:text="${comment.content}">댓글 내용</span>
+                        <small th:text="${#temporals.format(comment.createdAt, 'yyyy.MM.dd HH:mm')}"></small>
+                    </p>
+                </div>
+                <form th:action="@{/products/review-comment}" method="post" style="margin-top:10px;">
+                    <input type="hidden" name="reviewId" th:value="${review.reviewId}" />
+                    <textarea name="content" placeholder="댓글을 입력하세요" required
+                              style="width:100%; height:60px; padding:8px; border:1px solid #ccc; border-radius:4px; resize:none;"></textarea>
+                    <button type="submit"
+                            style="margin-top:5px; padding:6px 12px; background:#d60000; color:#fff; border:none; border-radius:4px; cursor:pointer;">
+                        댓글 작성
+                    </button>
+                </form>
+
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+  </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabs = document.querySelectorAll(".tab-link");
+
+      tabs.forEach(tab => {
+        tab.addEventListener("click", function (e) {
+          tabs.forEach(t => t.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+    });
+</script>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</body>
+</html>

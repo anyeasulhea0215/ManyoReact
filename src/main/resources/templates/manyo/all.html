@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>전체 상품</title>
+  <link rel="stylesheet" th:href="@{/assets/css/best.css}" />
+  <style>
+  main{
+  padding-top:160px;}
+.category-list {
+  margin: 40px 20px 30px 60px;
+  font-size: 14px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  color: #666666;
+  font-weight: 400;
+}
+
+.category-list span {
+  font-weight: 600;
+  font-size: 16px;
+  margin-right: 12px;
+  color: #111111;
+}
+
+.category-list a {
+  text-decoration: none;
+  color: #666666;
+  cursor: pointer;
+  padding-bottom: 2px;
+  transition: color 0.3s;
+}
+
+.category-list a:hover {
+  color: #b60217;
+}
+
+.category-list a.active {
+  color: #b60217;
+  font-weight: 700;
+  border-bottom: 2px solid #b60217;
+}
+
+
+  </style>
+</head>
+<body th:attr="data-user-id=${memberInfo != null ? memberInfo.id : ''}">
+<header th:replace="~{fragments/header :: my-header}"></header>
+
+<main class="main">
+  <div class="category-dropdown">
+    <div class="category-list">
+      <span>전체 상품</span>
+      <a th:href="@{/products}" th:classappend="${categoryId == null} ? ' active' : ''">전체</a>
+      <a th:href="@{/products(categoryId=1)}" th:classappend="${categoryId == 1} ? ' active' : ''">클렌징</a>
+      <a th:href="@{/products(categoryId=2)}" th:classappend="${categoryId == 2} ? ' active' : ''">토너,패드,미스트</a>
+      <a th:href="@{/products(categoryId=3)}" th:classappend="${categoryId == 3} ? ' active' : ''">앰플,에센스</a>
+      <a th:href="@{/products(categoryId=4)}" th:classappend="${categoryId == 4} ? ' active' : ''">로션,크림,아이크림</a>
+      <a th:href="@{/products(categoryId=5)}" th:classappend="${categoryId == 5} ? ' active' : ''">썬,메이크업</a>
+      <a th:href="@{/products(categoryId=6)}" th:classappend="${categoryId == 6} ? ' active' : ''">마스크,팩</a>
+      <a th:href="@{/products(categoryId=7)}" th:classappend="${categoryId == 7} ? ' active' : ''">헤어,바디</a>
+      <a th:href="@{/products(categoryId=8)}" th:classappend="${categoryId == 8} ? ' active' : ''">립,핸드</a>
+      <a th:href="@{/products(categoryId=9)}" th:classappend="${categoryId == 9} ? ' active' : ''">남성</a>
+    </div>
+  </div>
+
+  <form action="/products" method="get" class="search-form">
+    <input type="text" name="keyword" placeholder="상품명을 입력하세요" th:value="${keyword}" class="search-input" />
+    <button type="submit" class="search-button">검색</button>
+  </form>
+
+  <p class="product-count" th:if="${products == null or products.size() == 0}" >0개의 상품</p>
+  <p class="product-count" th:if="${products != null}" th:text="${products.size()} + '개의 상품'" style="margin-left:60px;">0개의 상품</p>
+
+  <div class="product-grid">
+    <div class="product" th:each="product : ${products}">
+      <div class="product-img-box">
+        <a th:href="@{/products/detail(productId=${product.productId})}">
+          <img th:src="@{${product.productImg}}" th:alt="${product.productName}" class="product-img" />
+        </a>
+      </div>
+      <p class="product-name" th:text="${product.productName}">상품명</p>
+      <div class="price-box">
+                <span class="price-original"
+                      th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + '원'">정가</span>
+        <span class="price-sale"
+              th:text="${#numbers.formatDecimal(product.salePrice, 0, 'COMMA', 0, 'POINT')} + '원'">할인가</span>
+        <span class="discount" th:text="${product.discount + '%'}">할인율</span>
+      </div>
+      <div class="delivery">
+        <img th:src="@{/assets/img/best_img/베스트_마법배송.png}" alt="마법배송" class="delivery-icon" />
+        <span class="arrival-date" th:text="'내일 ' + ${tomorrowDate} + ' 도착 예정'">도착 예정</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination-wrapper">
+    <div class="pagination-wrapper">
+      <div class="pagination">
+        <a th:if="${pageHelper.nowPage > 1}"
+           th:href="@{/products(page=${pageHelper.prevPage}, keyword=${keyword})}">이전</a>
+
+        <a th:each="i : ${#numbers.sequence(pageHelper.startPage, pageHelper.endPage)}"
+           th:href="@{/products(page=${i}, keyword=${keyword})}"
+           th:text="${i}"
+           th:classappend="${pageHelper.nowPage == i} ? ' current' : ''">1</a>
+
+        <a th:if="${pageHelper.nowPage < pageHelper.totalPage}"
+           th:href="@{/products(page=${pageHelper.nextPage}, keyword=${keyword})}">다음</a>
+      </div></div>
+    </div>
+
+  </div>
+
+</main>
+
+<div th:replace="~{fragments/footer :: my-footer}" />
+
+<script th:src="@{/assets/js/logout.js}"></script>
+
+<script>
+
+</script>
+
+<script th:src="@{/assets/js/RecentViewProducts.js}"></script>
+
+
+</body>
+</html>

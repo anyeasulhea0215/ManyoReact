@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.product-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.product-image {
+    flex: 1;
+    text-align: center;
+}
+
+.product-image img {
+    width: 80%;
+    max-width: 400px;
+}
+
+.product-info {
+    flex: 1;
+    padding-left: 40px;
+}
+
+.product-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #888;
+}
+
+.product-info h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.original-price {
+    color: #888;
+    font-size: 18px;
+}
+
+.sale-price {
+    font-size: 28px;
+    color: #d60000;
+    margin: 10px 0;
+}
+
+.sale-price .discount {
+    font-size: 18px;
+    color: #d60000;
+    margin-left: 10px;
+}
+
+.mileage {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.delivery {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.delivery .highlight {
+    color: #d60000;
+    font-weight: bold;
+}
+
+.buy-button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    background-color: #222;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.buy-button:hover {
+    background-color: #555;
+}

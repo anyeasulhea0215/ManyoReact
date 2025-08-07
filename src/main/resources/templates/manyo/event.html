@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>이벤트</title>
+    <link rel="stylesheet" th:href="@{/assets/css/event.css}">
+</head>
+<body>
+<header th:replace="fragments/header :: my-header"></header>
+
+<main class="event-main">
+    <section class="event-title">
+        <h2>이벤트</h2>
+        <div class="tab-menu">
+            <span class="active">진행중 이벤트</span>
+        </div>
+        <hr class="tab-divider">
+    </section>
+
+    <section class="event-list">
+        <div class="event-item">
+            <a th:href="@{/manyo/event-detail(id=1)}">
+                <img th:src="@{/assets/img/이벤트1.jpg}" alt="이벤트1">
+            </a>
+            <h3>피부 날씨 맑음 Perfect Galac!</h3>
+            <p>2025.06.02 10:00 ~ 2025.06.30 10:00</p>
+        </div>
+        <div class="event-item">
+            <a th:href="@{/manyo/event-detail(id=2)}">
+                <img th:src="@{/assets/img/이벤트2.jpg}" alt="이벤트2">
+            </a>
+            <h3>2025 여름 에디션 with 민들레마음</h3>
+            <p>2025.06.16 10:00 ~ 2025.07.31 23:59</p>
+        </div>
+        <div class="event-item">
+            <a th:href="@{/manyo/event-detail(id=3)}">
+                <img th:src="@{/assets/img/이벤트3.jpg}" alt="이벤트3">
+            </a>
+            <h3>카카오 플러스친구 쿠폰 이벤트</h3>
+            <p>2024.05.02 00:00 ~ 2031.12.31 23:59</p>
+        </div>
+    </section>
+
+    <div class="pagination">
+        <span class="page active">1</span>
+    </div>
+</main>
+
+<script th:src="@{/assets/js/logout.js}"></script>
+
+</body>
+</html>

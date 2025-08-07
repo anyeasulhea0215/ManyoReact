@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reset-pw</title>
+
+    <style>
+
+        .login-body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+
+             width: 600px;
+            margin: 200px auto 100px;
+             font-family: sans-serif;
+            color: #333;
+        }
+
+        .member-tab{
+            display: flex;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+
+            .pick-id{
+                flex: 1;
+                border-right: 1px solid #c0bebe;
+            }
+
+            .pick-pw{
+                button{
+                    background-color: #fff;
+                }
+            }
+            button{
+                 width: 200px;
+              padding: 14px 20px;
+              background: #f9f9f9;
+              border: none;
+              font-weight: bold;
+              color: #aaa;
+              cursor: pointer;
+              white-space: nowrap;
+            }
+
+        }
+
+        .login-input{
+            display: flex;
+            flex-direction: column;
+
+            .input-box{
+                width: 400px;
+                display: flex;
+                flex-direction: column;
+
+                 input[type="text"],
+                 input[type="email"] {
+                   width: 100%;
+                   box-sizing: border-box;
+                    padding: 12px;
+                    margin-bottom: 10px;
+                    border: 1px solid #ddd;
+                     border-radius: 6px;
+                     font-size: 14px;
+                  }
+            }
+
+            .login-button{
+                 button{
+                     width: 100%;
+                    background: #b9131b;
+                       color: white;
+                       border: none;
+                      border-radius: 5px;
+                      padding: 14px 0;
+                    font-size: 16px;
+                    font-weight: bold;
+                    cursor: pointer;
+                 }
+            }
+
+            .login-box{
+                margin-top: 30px;
+                display: flex;
+                gap: 12px;
+                justify-content:center;
+                align-items: center;
+                a,span{
+                    font-weight: 600;
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div th:replace="~{fragments/header :: my-header}">
+
+    </div>
+
+    <div class="login-body">
+
+        <div class="member-tab">
+            <div class="pick-id">
+                 <button>아이디찾기</button>
+            </div>
+            <div class="pick-pw">
+                 <button>비밀번호 찾기</button>
+            </div>
+        </div>
+
+         <form  id="find-password-form">
+             <div class="login-input">
+            <div class="input-box">
+                <input type="text" id="user_id" name="user_id" placeholder="아이디" />
+                <input type="email" id="email" name="email" placeholder="이메일" />
+            </div>
+
+            <div class="login-button">
+                 <!--비밀번호 찾기-->
+                <button type="submit" class="btn">
+                    비밀번호 찾기
+                 </button>
+            </div>
+            <div class="login-box">
+                <a th:href="@{/join}">회원가입</a>
+                <span>|</span>
+                <a th:href="@{/login}">로그인</a>
+            </div>
+         </div>
+         </form>
+    </div>
+
+    <div th:replace="~{fragments/footer :: my-footer}"> </div>
+
+     <th:block th:replace="~{_fragments/_scripts :: my-scripts}" />
+    <script>
+        document.querySelector('#find-password-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            /** 입력값 유효성 검사 */
+            try {
+                regexHelper.value("#user_id", "아이디를 입력해주세요");
+                regexHelper.value("#email", "이메일 주소를 입력해주세요");
+            } catch (err) {
+                await utilHelper.alertDanger(err.message);
+                setTimeout(() => err.element.focus(), 1);
+                return false;
+            }
+
+            let data=null;
+
+            /** 비밀번호 재발급 요청 */
+            try {
+                 data = await fetchHelper.put("[[@{/api/account/reset_pw}]]", new FormData(e.currentTarget));
+            } catch (err) {
+                await utilHelper.alertDanger(err.message);
+                setTimeout(() => err.element.focus(), 1);
+                return false;
+            }
+
+            /** 메일 발송 안내 성공 알림 및 리디렉션 */
+            const email = document.querySelector("#email").value;
+            await utilHelper.alertSuccess(`${email}로 비밀번호를 보내드렸습니다. 메일함을 확인해 주세요.`);
+            window.location = "[[@{/login/login}]]";
+        });
+    </script>
+
+</body>
+</html>

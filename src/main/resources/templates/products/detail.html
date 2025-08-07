@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${products.productName}">상품 상세 페이지</title>
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+    }
+
+    .detail-header {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        margin-left: 20px;
+        border-bottom: 2px solid transparent;
+        text-decoration: none;
+    }
+
+    .detail-header a.active {
+      color: #d60000;
+      border-bottom: 2px solid #d60000;
+      font-weight: bold;
+    }
+
+    .wish {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .share-icon, .wishlist-icon {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
+
+    .price-info {
+        background-color: #f8f8f8;
+        padding: 25px;
+        border-radius: 8px;
+    }
+
+    .product-container {
+        display: flex;
+        max-width: 1200px;
+        margin: 200px auto;
+        padding: 0 20px;
+    }
+
+    .product-image {
+    flex: 1;
+    position: relative;
+    height: 700px;
+    background-color: #eee;
+    display: block;
+}
+
+  .product-image img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 100%;
+      max-height: 100%;
+  }
+
+    .product-info {
+        flex: 1;
+        padding-left: 40px;
+    }
+
+    .product-info h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #888;
+    }
+
+    .product-info h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .price {
+        display: flex;
+    }
+
+    .cupon {
+        border-radius: 5px;
+        border: none;
+        padding: 5px 15px;
+        font-size: 10px;
+        margin-left: 20px;
+        background-color: #555555;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .original-price {
+        color: #888;
+        font-size: 20px;
+    }
+
+    .sale-price {
+        font-size: 28px;
+        font-weight: bold;
+        color: #d60000;
+    }
+
+    .sale-price .discount {
+        font-size: 17px;
+        color: #d60000;
+        margin-left: 10px;
+    }
+
+    .mileage {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .delivery {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .delivery .highlight {
+        color: #d60000;
+        font-weight: bold;
+        padding-left: 5px;
+    }
+
+   .buttons {
+    display: flex;
+    gap: 25px;
+    margin-top: 45px;
+}
+
+.cart-button, .buy-button {
+    flex: 1;
+    padding: 18px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.cart-button {
+    background-color: #ffffff;
+    color: #333;
+    border: 2px solid #ccc;
+}
+
+.cart-button:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.buy-button {
+    background-color: #d60000;
+    color: #fff;
+}
+
+.buy-button:hover {
+    background-color: #aa0000;
+    transform: translateY(-2px);
+}
+
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: my-header}"></div>
+
+<main class="product-container">
+  <!-- 상품 이미지 영역 -->
+  <div class="product-image">
+    <img th:src="@{${products.productImg}}" alt="상품 이미지" />
+  </div>
+
+  <!-- 상품 정보 영역 -->
+  <div class="product-info">
+    <div class="detail-header">
+      <a th:href="@{/products/detail(productId=${products.productId})}"
+         th:classappend="${activeTab} == 'detail' ? 'active' : ''" class="tab-link">상품설명</a>
+      <a th:href="@{/products/product-review(productId=${products.productId})}"
+         th:classappend="${activeTab} == 'review' ? 'active' : ''" class="tab-link">리뷰</a>
+      <a th:href="@{/products/product-inquiry(productId=${products.productId})}"
+         th:classappend="${activeTab} == 'inquiry' ? 'active' : ''">문의</a>
+    </div>
+
+
+    <div class="wish">
+      <h3 th:text="${products.productName}">상품명</h3>
+      <div class="icon-group">
+        <button type="button" id="shareBtn" style="background: none; border: none; padding: 0; cursor: pointer; margin-left:10px;">
+          <img th:src="@{/assets/img/공유.png}" alt="공유" class="share-icon" />
+        </button>
+        <form th:action="@{/mypage/add}" method="post" style="display:inline;">
+          <input type="hidden" name="productId" th:value="${products.productId}" />
+
+          <button type="submit" style="border:none; background:none; padding:0; cursor:pointer;">
+            <img th:src="@{/assets/img/위시리스트.png}" alt="위시리스트" class="wishlist-icon" />
+          </button>
+        </form>
+
+      </div>
+    </div>
+
+    <p class="original-price">
+      <del th:text="${#numbers.formatInteger(products.productPrice, 3, 'COMMA')} + '원'">58,000원</del>
+    </p>
+
+    <div class="price-info">
+      <p class="sale-price">
+        <span th:text="${#numbers.formatInteger(products.salePrice, 3, 'COMMA')} + '원'">27,800원</span>
+        <span class="discount" th:text="${products.discount} + '%'">52%</span>
+        <button id="couponBtn" class="cupon">쿠폰받기</button>
+      </p>
+
+      <div class="mileage">
+        <p>예상 적립 마일리지: 556원</p>
+        <p>리뷰 작성 시 최대 1,000원</p>
+      </div>
+
+      <div class="delivery">
+        <p>
+          <strong>마법배송</strong><br />
+          22시 59분 이전 구매 시, <span class="highlight">내일 도착 예정</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <form th:action="@{/orders/cart}" method="post">
+        <input type="hidden" name="productId" th:value="${products.productId}" />
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" class="cart-button">장바구니</button>
+      </form>
+
+      <form th:action="@{/orders/order}" method="get">
+        <input type="hidden" name="productId" th:value="${products.productId}" />
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" class="buy-button">구매하기</button>
+      </form>
+
+
+    </div>
+  </div>
+</main>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tabs = document.querySelectorAll(".tab-link");
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", function (e) {
+        tabs.forEach(t => t.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+        const couponBtn = document.getElementById("couponBtn");
+    couponBtn.addEventListener("click", function () {
+      this.textContent = "쿠폰받기 완료";
+      this.style.backgroundColor = "#d60000";
+    });
+    const shareBtn = document.getElementById("shareBtn");
+    shareBtn.addEventListener("click", function () {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert("링크가 복사되었습니다!");
+        })
+        .catch(err => {
+          console.error("URL 복사 실패:", err);
+          alert("복사에 실패했습니다. 다시 시도해주세요.");
+        });
+    });
+  });
+
+</script>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</body>
+</html>

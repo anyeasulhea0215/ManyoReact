@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<header lang="en" translate="no" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>마녀공장</title>
+
+</head>
+<body>
+
+
+<footer class="footer" th:fragment="my-footer">
+      <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+   <div class="footer-wrapper">
+     <div class="footer1">
+     <div>
+        <a href="#">
+             <img src="https://manyo08552.cdn-nhncommerce.com/data/skin/front/mu_manyo/img/banner/db6c87b39f245ac1e2cf3f34bd82b3af_12586.png" alt="manyo" th:href="@{/index}">
+        </a>
+     </div>
+     <span>(주)마녀공장</span>
+  </div>
+
+  <div class="footer2">
+     <div class="footer-con1">
+          <p>
+      <span>대표: 김기현, 송지혜</span>
+      <span class="divider">|</span>
+      <span>주소: 서울특별시 강서구 공항대로 마녀공장</span>
+      <span class="divider">|</span>
+      <span>사업자등록번호: 108-86-00365</span>
+      <a href="#">[사업자번호조회]</a>
+    </p>
+    <p>
+      <span>통신판매업신고번호: 제 202</span>
+      <span class="divider">|</span>
+      <span>개인정보보호 책임자:</span>
+      <span class="divider">|</span>
+      <span>메일:</span>
+      <span class="divider">|</span>
+      <span>고객센터:</span>
+      <span class="divider">|</span>
+      <span>팩스번호:</span>
+    </p>
+     </div>
+     <div class="footer-con2">
+       <p>COMPANY @ MANYOFACTORY ALL RIGHTS RESERVED.</p>
+    <p>
+      안전거래를 위해 이니시스의 구매안전(에스크로)에 가입하여 서비스를 제공하고 있습니다.
+      <a href="#">[가입확인]</a>
+    </p>
+     </div>
+  </div>
+  <div class="footer3">
+       <div class="ul">
+         <ul>
+          <li class="item"> <a th:href="@{/personal}">개인정보처리방침</a></li>
+          <li class="item">|</li>
+          <li class="item"> <a th:href="@{/agreement}">이용약관</a></li>
+          <li class="item">|</li>
+          <li class="item"> <a th:href="@{/cooperation}">제휴문의</a></li>
+          <li class="item">|</li>
+          <li class="item"> <a th:href="@{/customer-center}">고객센터</a></li>
+          <li class="item">|</li>
+          <li class="item"> <a th:href="@{/terms}">윤리경영</a></li>
+          <li class="item">|</li>
+          <li class="item"> <a th:href="@{/ir}">IR정보</a></li>
+        </ul>
+       </div>
+
+     <div class="family-box">
+      <div class="custom-select" id="customSelect">
+         <select id="language">
+          <option value="" disabled selected hidden>Brand-Site</option>
+          <option value="">ma:nyo official site - English</option>
+          <option value="">ma:nyo official site - Chinese</option>
+          <option value="">ma:nyo official site - Japanese</option>
+         </select>
+        <img th:src="@{/assets/img/arr_dw.png}" alt="화살표" class="select-arrow" />
+        </div>
+       </div>
+  </div>
+  <script th:src="@{/assets/js/footer.js}"></script>
+   </div>
+</footer>
+
+
+
+</body>
+
+</html>

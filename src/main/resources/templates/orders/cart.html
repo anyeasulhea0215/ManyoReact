@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>장바구니</title>
+  <link rel="stylesheet" th:href="@{/assets/css/order.css}" />
+</head>
+<body>
+
+<header th:replace="fragments/header :: my-header"></header>
+<div style="height: 200px;"></div>
+
+<h1 style="margin-left:30px;">장바구니</h1>
+
+<div class="cart-container" th:if="${items.size() > 0}">
+  <div class="cart-left">
+    <p>총 <strong th:text="${items.size()}">0</strong>개의 상품</p>
+    <hr>
+
+    <div class="product-item" th:each="item : ${items}">
+      <img th:src="@{${item.product.productImg}}" alt="상품 이미지">
+      <div>
+        <p class="product-title" th:text="${item.product.productName}">상품명</p>
+        <p>
+          <span class="discount" th:if="${item.product.discount > 0}"
+                th:text="|${item.product.discount}%|">할인율</span>
+          <span th:text="|${item.product.salePrice}원|">가격</span>
+        </p>
+      </div>
+      <form th:action="@{/orders/cart/update}" method="post" class="quantity-form">
+        <input type="hidden" name="basketId" th:value="${item.basketId}" />
+        <button type="submit" name="action" value="decrease" class="qty-btn btn-decrease">-</button>
+        <input type="text" name="quantity" th:value="${item.quantity}" class="qty-input" readonly />
+        <button type="submit" name="action" value="increase" class="qty-btn btn-increase">+</button>
+      </form>
+
+      <form th:action="@{/orders/cart/delete}" method="post" style="display:inline;">
+        <input type="hidden" name="basketId" th:value="${item.basketId}" />
+        <button type="submit" class="delete-button">삭제</button>
+      </form>
+
+
+    </div>
+  </div>
+
+  <div class="cart-right">
+    <h3>결제정보</h3>
+    <p>총 상품금액 <span class="price-right" th:text="|${totalPrice} 원|">0 원</span></p>
+    <p>배송비 <span class="price-right" th:text="|${deliveryFee} 원|">0 원</span></p>
+    <hr>
+    <p class="total-price">결제금액 <span class="price-right" th:text="|${totalPrice + deliveryFee} 원|">0 원</span></p>
+    <p class="notice">※ 주문서 작성단계에서 할인/마일리지 적용을 하실 수 있습니다.</p>
+    <form th:action="@{/order/checkout}" method="post">
+      <div th:each="item : ${items}">
+        <input type="checkbox" name="basketIds" th:value="${item.basketId}" checked />
+        <span th:text="${item.product.productName}">상품명</span>
+      </div>
+      <button type="submit" class="pay-button">결제하기</button>
+    </form>
+
+
+  </div>
+</div>
+
+<div class="cart-container" th:unless="${items.size() > 0}">
+  <div class="cart-left">
+    <div class="empty-message">장바구니에 담겨있는 상품이 없습니다.</div>
+  </div>
+  <div class="cart-right">
+    <h3>결제정보</h3>
+    <p>총 상품금액 <span class="price-right">0 원</span></p>
+    <p>배송비 <span class="price-right">0 원 <span class="badge-free">무료배송</span></span></p>
+    <hr>
+    <p class="total-price">결제금액 <span class="price-right">0 원</span></p>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+</body>
+</html>

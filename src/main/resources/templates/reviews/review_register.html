@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>리뷰 작성 페이지</title>
+    <style>
+        a {
+         text-decoration: none;
+         color: #333;
+         cursor: pointer;
+       }
+
+       html, body {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+       }
+
+       hr {
+         margin-top: 100px;
+         background-color: rgb(228, 228, 228);
+         height: 1px;
+         border: none;
+       }
+
+       .content {
+         margin-left: 400px;
+       }
+
+       .content1 {
+         display: flex;
+         padding-top: 170px;
+         padding-bottom: 40px;
+       }
+
+       .write-tab {
+         font-weight: 700;
+         color: #b6b6b6;
+         padding-right: 20px;
+         cursor: pointer;
+       }
+
+       .write-tab:hover {
+         color: black;
+       }
+
+       .active-tab {
+         color: black !important;
+       }
+
+       #resetBtn, #editBtn, #deleteBtn, #submitBtn {
+         padding: 5px 10px;
+       }
+
+       .common-btn {
+         border: none;
+         font-size: 13px;
+         cursor: pointer;
+         border-radius: 7px;
+         transition: background-color 0.3s ease;
+       }
+
+       .reviewform {
+         font-size: 14px;
+         padding: 50px 45px;
+         margin-top: 30px;
+         border: 1px solid #ddd;
+         border-radius: 10px;
+         background-color: #fafafa;
+         width: 1000px;
+         margin-bottom:100px;
+       }
+
+       label {
+         padding-right: 6px;
+         font-weight: 500;
+       }
+
+       #productname, #title, #content {
+         border: 1px solid #a5a5a5;
+         border-radius: 5px;
+         padding-left: 10px;
+       }
+
+       .star {
+         border: 1px solid #a5a5a5;
+         border-radius: 5px;
+         height: 30px;
+         padding: 3px 5px;
+       }
+
+       #title, #productname {
+         height: 30px;
+         width: 300px;
+       }
+
+       #content {
+         width: 500px;
+         height: 100px;
+       }
+
+       #reviewbtn {
+         background-color: rgb(243, 243, 243);
+         color: #000;
+         padding: 18px;
+         margin-left: 700px;
+
+       }
+
+       #reviewbtn:active {
+         background-color: #d0d0d0;
+       }
+
+       .review-buttons {
+         display: flex;
+         gap: 10px;
+         padding: 5px 10px;
+         padding-left: 680px;
+       }
+
+       #submitBtn {
+         background-color: #333;
+         color: white;
+       }
+
+       #resetBtn {
+         background-color: #f1b2b2;
+         color: white;
+       }
+
+       #editBtn {
+         background-color: #cce09d;
+         color: white;
+       }
+
+       #deleteBtn {
+         background-color: #f1d69a;
+         color: white;
+       }
+
+       #submitBtn:active {
+         background-color: #111;
+       }
+
+       .reviewform > div {
+         margin-bottom: 20px;
+       }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: my-header}"></div>
+
+<div class="content" style="margin-left:400px; padding-top: 170px;">
+    <h2>리뷰 등록</h2>
+
+    <form id="reviewForm" class="reviewform" th:action="@{/reviews}" method="post" enctype="multipart/form-data">
+
+        <p>상품명: <span th:text="${orderPname}"></span></p>
+        <input type="hidden" name="productId" th:value="${productId}"/>
+
+
+
+        <div>
+            <label>별점:</label>
+            <select name="rating" class="star" required>
+                <option value="5">★★★★★ (5점)</option>
+                <option value="4">★★★★☆ (4점)</option>
+                <option value="3">★★★☆☆ (3점)</option>
+                <option value="2">★★☆☆☆ (2점)</option>
+                <option value="1">★☆☆☆☆ (1점)</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="title">리뷰 제목:</label>
+            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요" required/>
+        </div>
+
+        <div>
+            <label for="content">리뷰 내용:</label>
+            <textarea id="content" name="content" placeholder="리뷰를 입력해주세요" required></textarea>
+        </div>
+
+        <div>
+            <label for="photo">사진 업로드 (선택):</label>
+            <input type="file" id="photo" name="photo" accept="image/*" />
+        </div>
+
+        <div class="review-buttons">
+            <button type="reset" id="resetBtn" class="common-btn reset-btn">초기화</button>
+            <button type="submit" id="submitBtn" class="common-btn">작성 완료</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="~{fragments/footer :: my-footer}"></div>
+<script th:src="@{/assets/js/logout.js}"></script>
+
+</body>
+</html>
