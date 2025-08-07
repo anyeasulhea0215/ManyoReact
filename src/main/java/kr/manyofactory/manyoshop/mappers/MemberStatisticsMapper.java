@@ -4,8 +4,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-
+import kr.manyofactory.manyoshop.models.MemberStatics;
 import java.time.LocalDate;
+import java.util.List;
 
 @Mapper
 public interface MemberStatisticsMapper {
@@ -29,4 +30,14 @@ public interface MemberStatisticsMapper {
                 ON DUPLICATE KEY UPDATE count = #{count}
             """)
     int insertDailyCount(@Param("date") LocalDate date, @Param("count") int count);
+
+    /**
+     * 전체 회원 가입 통계 조회
+     */
+    @Select("""
+                SELECT id, date, count
+                FROM daily_member_count
+                ORDER BY date DESC
+            """)
+    List<MemberStatics> selectAllDailyCounts();
 }
