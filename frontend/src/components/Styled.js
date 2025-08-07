@@ -1,6 +1,4 @@
-/**
- * 표에 CSS를 적용한 styledComponent
- */
+
 import styled from "styled-components";
 
 const Table = styled.table`
