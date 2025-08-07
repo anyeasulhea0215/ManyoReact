@@ -65,3 +65,47 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// ⭐⭐⭐ React 프로젝트 통합 설정 ⭐⭐⭐
+
+// React 프로젝트 경로 설정
+def frontendDir = file("frontend")
+
+// Node.js 설정
+node {
+   version = "20.17.0"        // Node.js 버전
+   download = true            // 자동 다운로드 활성화
+   yarnVersion = "1.22.22"    // Yarn 버전 (Yarn 사용 시)
+   nodeProjectDir = frontendDir
+}
+
+// 🔥 개발 환경: SpringBoot 실행 시 React 개발 서버도 함께 실행
+task startReactDev(type: YarnTask) {
+    dependsOn yarn
+    yarnCommand = ['start']
+}
+
+// 🏗️ 빌드 환경: React 빌드 후 Spring Boot static 폴더로 복사
+task buildReact(type: YarnTask) {
+    dependsOn yarn
+    yarnCommand = ['build']
+}
+
+bootRun {
+   dependsOn startReactDev
+}
+
+task copyReactBuild(type: Copy) {
+   dependsOn buildReact
+   from "${frontendDir}/build"
+   into "src/main/resources/static"
+}
+
+// 📦 Spring Boot jar 빌드 시 React도 함께 빌드
+jar {
+   dependsOn copyReactBuild
+}
+
+bootJar {
+   dependsOn copyReactBuild
+}
