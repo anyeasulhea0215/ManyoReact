@@ -1,4 +1,8 @@
-
+/**
+ * /src/helpers/ReduxHelper.js
+ *
+ * ReduxSlice를 작업하면서 반복되는 중복코드의 모듈화
+ */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import fetchHelper from "./FetchHelper";
 
@@ -43,6 +47,7 @@ const reduxHelper = {
       reducers: reducers,
       extraReducers: (builder) => {
         extraReducers.forEach((v) => {
+          // ✅ 방어코드 추가: thunk가 유효한지 확인
           if (!v || !v.pending || !v.fulfilled || !v.rejected) {
             console.warn(`[ReduxHelper] Invalid thunk detected in extraReducers:`, v);
             return;
