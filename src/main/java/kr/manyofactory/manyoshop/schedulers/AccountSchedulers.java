@@ -65,6 +65,6 @@ public class AccountSchedulers {
     // 매일 오전 1시 실행
     @Scheduled(cron = "0 0 1 * * *")
     public void runDailyStatistics() {
-        memberStatisticsService.saveYesterdayMemberCount();
+        memberStatisticsService.saveAndGetAll();
     }
 }

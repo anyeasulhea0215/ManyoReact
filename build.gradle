@@ -2,6 +2,9 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+
+    // ⭐⭐⭐⭐⭐ gradle이 node와 연동할 수 있는 플러그인 추가 ⭐⭐⭐⭐⭐
+	id 'com.github.node-gradle.node' version '7.0.2'
 }
 
 group = 'kr.manyofactory'
@@ -110,4 +113,21 @@ jar {
 
 bootJar {
    dependsOn copyReactBuild
+}
+
+
+tasks.named('yarn') {
+    enabled = false
+}
+
+tasks.named('startReactDev') {
+    enabled = false
+}
+
+tasks.named('buildReact') {
+    enabled = false
+}
+
+tasks.named('copyReactBuild') {
+    enabled = false
 }
