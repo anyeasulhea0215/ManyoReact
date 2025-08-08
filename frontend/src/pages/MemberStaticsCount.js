@@ -35,6 +35,8 @@ const MemberStatics=memo(() => {
 
     const {loading,status,message,item}= useSelector((state) => state.MemberStaticsSlice);
 
+    console.log("MemberStatics item:", item);
+
      //리덕스 디스패치 함수
     const dispatch=useDispatch();
 
@@ -48,7 +50,11 @@ const MemberStatics=memo(() => {
     if (!item) return { labels: null, values: null };
 
     const labels = item.map((v) => v.date); // 날짜가 라벨
+    console.log("labels:", labels);
+
+
     const values = item.map((v) => v.count); // 가입자 수가 데이터
+    console.log("values:", values);
 
     return { labels, values };
   }, [item]);
