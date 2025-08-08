@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 import Spinner from "../components/Spinner";
 import MemberStaticsCount from "./MemberStaticsCount";
+import PopularProductStatics from './PopularProductStatics';
 import Dashboard from "./Dashboard";
 
 
@@ -22,6 +23,7 @@ const Pages=memo(() => {
         <PagesContainer>
 
             <MemberStaticsCount />
+             <PopularProductStatics />
             <Dashboard />
 
         </PagesContainer>

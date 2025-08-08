@@ -1,5 +1,4 @@
 import React from "react";
-import PopularChart from "../pages/PopularChart";
 const Dashboard = () => {
   return (
     <div>
