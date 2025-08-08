@@ -1,10 +1,7 @@
 import React from "react";
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> 1caf6a181236f31aa3dfe67e19f43b96a815b3a0
 const Dashboard = () => {
   return (
     <div>

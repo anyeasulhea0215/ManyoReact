@@ -1,167 +1,103 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
-	id 'io.spring.dependency-management' version '1.1.7'
-<<<<<<< HEAD
-    id 'com.github.node-gradle.node' version '7.0.1'
-=======
-
-    // ⭐⭐⭐⭐⭐ gradle이 node와 연동할 수 있는 플러그인 추가 ⭐⭐⭐⭐⭐
-	id 'com.github.node-gradle.node' version '7.0.2'
->>>>>>> 31abdc649f94e1ec73615bd012b442c88dca2148
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.github.node-gradle.node' version '7.0.2'
 }
 
 group = 'kr.manyofactory'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	//implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	annotationProcessor 'org.projectlombok:lombok'
+   implementation 'org.springframework.boot:spring-boot-starter-actuator'
+   //implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+   implementation 'org.springframework.boot:spring-boot-starter-mail'
+   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+   implementation 'org.springframework.boot:spring-boot-starter-web'
+   compileOnly 'org.projectlombok:lombok'
+   developmentOnly 'org.springframework.boot:spring-boot-devtools'
+   runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+   annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+   testImplementation 'org.springframework.boot:spring-boot-starter-test'
+   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+   implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+   implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 
-	implementation 'com.github.ua-parser:uap-java:1.6.1'
+   implementation 'com.github.ua-parser:uap-java:1.6.1'
 
-	// Log4jdbc-log4j2 라이브러리
-	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+   // Log4jdbc-log4j2 라이브러리
+   implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
-	// 썸네일 이미지 생성 라이브러리
-	implementation 'net.coobird:thumbnailator:0.4.20'
+   // 썸네일 이미지 생성 라이브러리
+   implementation 'net.coobird:thumbnailator:0.4.20'
 
-	// Lombok이 단위 테스트에서 자동동작하도록 설정
-	testAnnotationProcessor 'org.projectlombok:lombok'
-	testCompileOnly 'org.projectlombok:lombok'
+   // Lombok이 단위 테스트에서 자동동작하도록 설정
+   testAnnotationProcessor 'org.projectlombok:lombok'
+   testCompileOnly 'org.projectlombok:lombok'
 
-	// [신규] Spring Session JDBC를 사용하여 세션 관리
-	implementation 'org.springframework.session:spring-session-jdbc'
+   // [신규] Spring Session JDBC를 사용하여 세션 관리
+   implementation 'org.springframework.session:spring-session-jdbc'
 
-	// [신규] Restful API 문서 자동화
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-
-    // ⭐⭐⭐ React 프로젝트 통합 설정 ⭐⭐⭐
-
-// React 프로젝트 경로 설정
-def frontendDir = file("frontend")
-
-// Node.js 설정
-node {
-   version = "20.17.0"        // Node.js 버전
-   download = true            // 자동 다운로드 활성화
-   yarnVersion = "1.22.22"    // Yarn 버전 (Yarn 사용 시)
-   nodeProjectDir = frontendDir
+   // [신규] Restful API 문서 자동화
+   implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 }
 
-// 🔥 개발 환경: SpringBoot 실행 시 React 개발 서버도 함께 실행
+
+def frontendDir = file("frontend")
+
+node {
+    version = "20.17.0"
+    download = true
+    yarnVersion = "1.22.22"
+    nodeProjectDir = frontendDir
+}
+
 task startReactDev(type: YarnTask) {
     dependsOn yarn
     yarnCommand = ['start']
 }
 
-// 🏗️ 빌드 환경: React 빌드 후 Spring Boot static 폴더로 복사
 task buildReact(type: YarnTask) {
     dependsOn yarn
     yarnCommand = ['build']
 }
 
 bootRun {
-   dependsOn startReactDev
+    dependsOn startReactDev
 }
 
 task copyReactBuild(type: Copy) {
-   dependsOn buildReact
-   from "${frontendDir}/build"
-   into "src/main/resources/static"
+    dependsOn buildReact
+    from "${frontendDir}/build"
+    into "src/main/resources/static"
 }
 
-// 📦 Spring Boot jar 빌드 시 React도 함께 빌드
 jar {
-   dependsOn copyReactBuild
+    dependsOn copyReactBuild
 }
 
 bootJar {
-   dependsOn copyReactBuild
-}
-
+    dependsOn copyReactBuild
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
-
-// ⭐⭐⭐ React 프로젝트 통합 설정 ⭐⭐⭐
-
-// React 프로젝트 경로 설정
-def frontendDir = file("frontend")
-
-// Node.js 설정
-node {
-   version = "20.17.0"        // Node.js 버전
-   download = true            // 자동 다운로드 활성화
-   yarnVersion = "1.22.22"    // Yarn 버전 (Yarn 사용 시)
-   nodeProjectDir = frontendDir
-}
-
-// 🔥 개발 환경: SpringBoot 실행 시 React 개발 서버도 함께 실행
-task startReactDev(type: YarnTask) {
-    dependsOn yarn
-    yarnCommand = ['start']
-}
-
-// 🏗️ 빌드 환경: React 빌드 후 Spring Boot static 폴더로 복사
-task buildReact(type: YarnTask) {
-    dependsOn yarn
-    yarnCommand = ['build']
-}
-
-bootRun {
-   dependsOn startReactDev
-}
-
-task copyReactBuild(type: Copy) {
-   dependsOn buildReact
-   from "${frontendDir}/build"
-   into "src/main/resources/static"
-}
-
-// 📦 Spring Boot jar 빌드 시 React도 함께 빌드
-jar {
-   dependsOn copyReactBuild
-}
-
-bootJar {
-   dependsOn copyReactBuild
-}
-
 
 tasks.named('yarn') {
     enabled = false
