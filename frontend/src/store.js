@@ -1,12 +1,12 @@
-import {configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import popularProductReducer from './slices/PopularProductSlice';
 
-import ManyoSlice from './slices/ManyoSlice';
 
+const store = configureStore({
+  reducer: {
+    popularProductReducer,
 
-const store=configureStore({
-    reducer: {
-        TitanicSlice
-    }
+  },
 });
 
 export default store;

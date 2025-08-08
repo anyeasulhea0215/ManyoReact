@@ -1,5 +1,4 @@
 import React from "react";
-import PopularProductChart from "../components/chart/PopularProductChart";
 const Dashboard = () => {
   return (
     <div>
