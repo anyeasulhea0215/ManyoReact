@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import kr.manyofactory.manyoshop.helpers.FileHelper;
 import kr.manyofactory.manyoshop.models.Members;
 import kr.manyofactory.manyoshop.services.MemberService;
-import kr.manyofactory.manyoshop.services.MemberStatisticsService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -34,13 +33,9 @@ public class AccountSchedulers {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private MemberStatisticsService memberStatisticsService;
-
-
-    // @Scheduled(cron = "15 * * * * ?") // 매 분마다 오전 15초에 실행
+    // @Scheduled(cron = "0 0 4 * * ?")
+    @Scheduled(cron = "15 * * * * ?") // 매 분마다 오전 15초에 실행
     // @Scheduled(cron = "0 0/30 * * * ?")
-    @Scheduled(cron = "0 0 4 * * ?")
     public void processOutMembers() throws Exception {
         log.debug("탈퇴 회원 정리 시작");
 
@@ -60,13 +55,5 @@ public class AccountSchedulers {
             fileHelper.deleteFile(m.getPhoto());
         }
 
-    }
-
-
-    // 매일 오전 1시 실행
-    // @Scheduled(cron = "0 0 1 * * *")
-    @Scheduled(cron = "0 * * * * *")
-    public void runDailyStatistics() {
-        memberStatisticsService.saveAndGetAll();
     }
 }

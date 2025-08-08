@@ -2,13 +2,13 @@
 import {configureStore } from '@reduxjs/toolkit';
 
 import MemberStaticsSlice from './slices/MemberStaticsSlice';
-import BestProductSlice from './slices/BestProductSlice';
+import PopularProductSlice from "./slices/PopularProductSlice";
 
 
 const store=configureStore({
     reducer: {
         MemberStaticsSlice,
-        BestProductSlice,
+        PopularProductSlice
     }
 
 });

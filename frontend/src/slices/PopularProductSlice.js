@@ -1,32 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import reduxHelper from "../helpers/ReduxHelper";
 
-export const fetchPopularProducts = createAsyncThunk(
-  "popularProduct/fetch",
-  async () => {
-    const response = await axios.get("/api/stat/popular-products");
-    return response.data;
-  }
-);
+const API_URL = "/api/stat/popular-products";
 
-const popularProductSlice = createSlice({
-  name: "popularProduct",
-  initialState: { items: [], loading: false, error: null },
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPopularProducts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchPopularProducts.fulfilled, (state, action) => {
-        state.items = action.payload;
-        state.loading = false;
-      })
-      .addCase(fetchPopularProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
-  },
-});
+export const getPopularProducts = reduxHelper.get("PopularProductSlice/getList", API_URL);
 
-export default popularProductSlice.reducer;
+const PopularProductSlice = reduxHelper.getDefaultSlice("PopularProductSlice", [getPopularProducts]);
+
+export default PopularProductSlice.reducer;
