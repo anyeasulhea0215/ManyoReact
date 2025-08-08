@@ -19,4 +19,5 @@ public class PopularProductServiceImpl implements PopularProductService {
     public List<PopularProduct> getYesterdayTopProducts() {
         return popularProductMapper.findYesterdayTopProducts();
     }
+
 }
