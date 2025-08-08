@@ -32,10 +32,12 @@ const PopularProductStatics = memo(() => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (item && Array.isArray(item) && item.length > 0) return;
+useEffect(() => {
+  if (!loading && !item) {
     dispatch(getPopularProducts());
-  }, [dispatch, item]);
+  }
+}, [dispatch, loading, item]);
+
 
   const { labels, values } = useMemo(() => {
     if (!item) return { labels: null, values: null };
@@ -48,7 +50,7 @@ const PopularProductStatics = memo(() => {
 
   return (
     <PopularProductStaticsContainer>
-      <Spinner loading={loading} />
+       {loading && <Spinner loading={true} />}
       <ErrorView status={status} message={message} />
 
       {labels && values && (

@@ -15,7 +15,8 @@ public class PopularProductController {
     private final PopularProductService popularProductService;
 
     @GetMapping("/popular-products")
-    public List<PopularProduct> getPopularProducts() {
-        return popularProductService.getYesterdayTopProducts();
-    }
+ public List<PopularProduct> getPopularProducts() {
+    List<PopularProduct> list = popularProductService.getYesterdayTopProducts();
+    return list != null ? list : List.of();
+}
 }
