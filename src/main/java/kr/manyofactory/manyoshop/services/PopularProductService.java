@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface PopularProductService {
     List<PopularProduct> getYesterdayTopProducts();
+     void generatePopularProducts();
 }

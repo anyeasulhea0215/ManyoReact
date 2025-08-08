@@ -19,5 +19,8 @@ public class PopularProductServiceImpl implements PopularProductService {
     public List<PopularProduct> getYesterdayTopProducts() {
         return popularProductMapper.findYesterdayTopProducts();
     }
-
-}
+    @Override
+    public void generatePopularProducts() {
+        popularProductMapper.insertPopularProductsFromOrders();
+    }
+        }

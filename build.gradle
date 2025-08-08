@@ -19,47 +19,47 @@ repositories {
 }
 
 dependencies {
-   implementation 'org.springframework.boot:spring-boot-starter-actuator'
-   //implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-   implementation 'org.springframework.boot:spring-boot-starter-mail'
-   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-   implementation 'org.springframework.boot:spring-boot-starter-web'
-   compileOnly 'org.projectlombok:lombok'
-   developmentOnly 'org.springframework.boot:spring-boot-devtools'
-   runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-   annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    annotationProcessor 'org.projectlombok:lombok'
 
     implementation 'org.springframework.boot:spring-boot-starter-test'
-   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-   implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-   implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
-   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    implementation 'com.github.ua-parser:uap-java:1.6.1'
 
-   implementation 'com.github.ua-parser:uap-java:1.6.1'
+    // Log4jdbc-log4j2 라이브러리
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
 
-   // Log4jdbc-log4j2 라이브러리
-   implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+    // 썸네일 이미지 생성 라이브러리
+    implementation 'net.coobird:thumbnailator:0.4.20'
 
-   // 썸네일 이미지 생성 라이브러리
-   implementation 'net.coobird:thumbnailator:0.4.20'
+    // Lombok이 단위 테스트에서 자동동작하도록 설정
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
 
-   // Lombok이 단위 테스트에서 자동동작하도록 설정
-   testAnnotationProcessor 'org.projectlombok:lombok'
-   testCompileOnly 'org.projectlombok:lombok'
+    // [신규] Spring Session JDBC를 사용하여 세션 관리
+    implementation 'org.springframework.session:spring-session-jdbc'
 
-   // [신규] Spring Session JDBC를 사용하여 세션 관리
-   implementation 'org.springframework.session:spring-session-jdbc'
-
-   // [신규] Restful API 문서 자동화
-   implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    // [신규] Restful API 문서 자동화
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 }
 
-
+// React 프로젝트 경로 설정
 def frontendDir = file("frontend")
 
+// Node.js 설정
 node {
     version = "20.17.0"
     download = true
@@ -67,11 +67,13 @@ node {
     nodeProjectDir = frontendDir
 }
 
+// React 개발 서버 실행 task
 task startReactDev(type: YarnTask) {
     dependsOn yarn
     yarnCommand = ['start']
 }
 
+// React 빌드 task
 task buildReact(type: YarnTask) {
     dependsOn yarn
     yarnCommand = ['build']
@@ -99,18 +101,15 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.named('yarn') {
-    enabled = false
-}
-
-tasks.named('startReactDev') {
-    enabled = false
-}
-
+ tasks.named('yarn') {
+     enabled = false
+ }
+ tasks.named('startReactDev') {
+     enabled = false
+ }
 tasks.named('buildReact') {
-    enabled = false
-}
-
+     enabled = false
+ }
 tasks.named('copyReactBuild') {
     enabled = false
-}
+ }
