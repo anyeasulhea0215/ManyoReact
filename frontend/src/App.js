@@ -1,3 +1,4 @@
+
 import React,{memo} from "react";
 
 import {Routes,Route} from "react-router-dom";
@@ -18,6 +19,5 @@ return(
      </>
 )
 });
-
 
 export default App;

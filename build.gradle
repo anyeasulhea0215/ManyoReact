@@ -2,9 +2,13 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+<<<<<<< HEAD
+    id 'com.github.node-gradle.node' version '7.0.1'
+=======
 
     // ⭐⭐⭐⭐⭐ gradle이 node와 연동할 수 있는 플러그인 추가 ⭐⭐⭐⭐⭐
 	id 'com.github.node-gradle.node' version '7.0.2'
+>>>>>>> 31abdc649f94e1ec73615bd012b442c88dca2148
 }
 
 group = 'kr.manyofactory'
@@ -64,6 +68,49 @@ dependencies {
 	// [신규] Restful API 문서 자동화
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
+    // ⭐⭐⭐ React 프로젝트 통합 설정 ⭐⭐⭐
+
+// React 프로젝트 경로 설정
+def frontendDir = file("frontend")
+
+// Node.js 설정
+node {
+   version = "20.17.0"        // Node.js 버전
+   download = true            // 자동 다운로드 활성화
+   yarnVersion = "1.22.22"    // Yarn 버전 (Yarn 사용 시)
+   nodeProjectDir = frontendDir
+}
+
+// 🔥 개발 환경: SpringBoot 실행 시 React 개발 서버도 함께 실행
+task startReactDev(type: YarnTask) {
+    dependsOn yarn
+    yarnCommand = ['start']
+}
+
+// 🏗️ 빌드 환경: React 빌드 후 Spring Boot static 폴더로 복사
+task buildReact(type: YarnTask) {
+    dependsOn yarn
+    yarnCommand = ['build']
+}
+
+bootRun {
+   dependsOn startReactDev
+}
+
+task copyReactBuild(type: Copy) {
+   dependsOn buildReact
+   from "${frontendDir}/build"
+   into "src/main/resources/static"
+}
+
+// 📦 Spring Boot jar 빌드 시 React도 함께 빌드
+jar {
+   dependsOn copyReactBuild
+}
+
+bootJar {
+   dependsOn copyReactBuild
+}
 
 }
 

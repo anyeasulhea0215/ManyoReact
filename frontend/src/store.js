@@ -1,3 +1,4 @@
+
 import {configureStore } from '@reduxjs/toolkit';
 
 import MemberStaticsSlice from './slices/MemberStaticsSlice';
@@ -9,6 +10,7 @@ const store=configureStore({
         MemberStaticsSlice,
         BestProductSlice,
     }
+
 });
 
 export default store;
