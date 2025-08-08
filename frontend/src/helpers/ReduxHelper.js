@@ -13,7 +13,11 @@ const pending = (state, { meta, payload }) => {
 
 // Redux가 성공 상태를 관리하는 상태값을 생성하는 함수
 const fulfilled = (state, { meta, payload }) => {
-  return { ...payload, loading: false };
+  // return { ...payload, loading: false };
+  state.loading = false;
+  state.status = 200;
+  state.message = "OK";
+  state.item = payload;  // API 데이터 할당
 };
 
 // Redux가 실패 상태를 관리하는 상태값을 생성하는 함수
