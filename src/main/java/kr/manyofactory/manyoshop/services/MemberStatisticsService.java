@@ -16,9 +16,11 @@ public class MemberStatisticsService {
     public List<MemberStatics> saveAndGetAll() {
 
         LocalDate yesterday = LocalDate.now().minusDays(1);
-        int count = memberStatisticsMapper.countByJoinDate(yesterday);
+
+        int count = memberStatisticsMapper.countByJoinDate(yesterday); // 1일전 회원가입수 조회
 
         memberStatisticsMapper.insertDailyCount(yesterday, count);
+        // 디비에 회원가입 수, 날짜 삽입
 
         return memberStatisticsMapper.selectAllDailyCounts();
     }
