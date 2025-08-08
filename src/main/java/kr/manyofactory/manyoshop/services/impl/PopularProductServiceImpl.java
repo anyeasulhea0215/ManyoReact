@@ -23,4 +23,9 @@ public class PopularProductServiceImpl implements PopularProductService {
     public void generatePopularProducts() {
         popularProductMapper.insertPopularProductsFromOrders();
     }
+    @Override
+    public List<PopularProduct> getTopProductsByWishlist() {
+    return popularProductMapper.findTopProductsByWishlist();
+}
+
         }

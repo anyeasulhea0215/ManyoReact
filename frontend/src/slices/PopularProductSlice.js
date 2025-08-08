@@ -1,6 +1,7 @@
 import reduxHelper from "../helpers/ReduxHelper";
 
-const API_URL = "/api/stat/popular-products";
+const API_URL = "/api/stat/popular-products/wishlist";
+
 
 export const getPopularProducts = reduxHelper.get("PopularProductSlice/getList", API_URL);
 

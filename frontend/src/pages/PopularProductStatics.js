@@ -50,7 +50,6 @@ useEffect(() => {
 
   return (
     <PopularProductStaticsContainer>
-       {loading && <Spinner loading={true} />}
       <ErrorView status={status} message={message} />
 
       {labels && values && (
@@ -74,7 +73,7 @@ useEffect(() => {
               legend: { position: "bottom" },
               title: {
                 display: true,
-                text: "어제 기준 인기상품 순위 Top 5",
+                text: "위시리스트에 담긴 인기상품 순위 Top 5",
                 font: { size: 18 },
               },
             },

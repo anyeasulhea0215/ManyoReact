@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Data
 public class PopularProduct {
-    private int Id;
+
     private int productId;
     private String productName;
     private int totalCount;

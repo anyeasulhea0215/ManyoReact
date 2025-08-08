@@ -14,9 +14,11 @@ public class PopularProductController {
 
     private final PopularProductService popularProductService;
 
-    @GetMapping("/popular-products")
- public List<PopularProduct> getPopularProducts() {
-    List<PopularProduct> list = popularProductService.getYesterdayTopProducts();
+
+@GetMapping("/popular-products/wishlist")
+public List<PopularProduct> getPopularProductsByWishlist() {
+    List<PopularProduct> list = popularProductService.getTopProductsByWishlist();
     return list != null ? list : List.of();
 }
+
 }
