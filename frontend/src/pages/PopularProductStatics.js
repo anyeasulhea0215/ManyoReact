@@ -58,7 +58,7 @@ useEffect(() => {
             labels,
             datasets: [
               {
-                label: "판매 수량",
+                label: "위시리스트 담긴 수량",
                 data: values,
                 backgroundColor: "rgba(255, 159, 64, 0.5)",
                 borderColor: "rgba(255, 159, 64, 1)",

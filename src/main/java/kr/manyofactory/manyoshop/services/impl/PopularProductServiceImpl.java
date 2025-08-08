@@ -16,16 +16,16 @@ public class PopularProductServiceImpl implements PopularProductService {
     private final PopularProductMapper popularProductMapper;
 
     @Override
-    public List<PopularProduct> getYesterdayTopProducts() {
-        return popularProductMapper.findYesterdayTopProducts();
-    }
-    @Override
-    public void generatePopularProducts() {
-        popularProductMapper.insertPopularProductsFromOrders();
-    }
-    @Override
     public List<PopularProduct> getTopProductsByWishlist() {
-    return popularProductMapper.findTopProductsByWishlist();
+        return popularProductMapper.findTopProductsByWishlist();
+    }
+
+    @ Override
+    public void generatePopularProducts() {
+    List<PopularProduct> products = popularProductMapper.findTopProductsByWishlist();
+    for (PopularProduct product : products) {
+        System.out.println("위시기반 인기상품: " + product.getProductName());
+    }
 }
 
-        }
+}
