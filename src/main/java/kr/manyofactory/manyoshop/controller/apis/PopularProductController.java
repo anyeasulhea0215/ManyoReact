@@ -15,10 +15,10 @@ public class PopularProductController {
     private final PopularProductService popularProductService;
 
 
-@GetMapping("/popular-products/wishlist")
-public List<PopularProduct> getPopularProductsByWishlist() {
-    List<PopularProduct> list = popularProductService.getTopProductsByWishlist();
-    return list != null ? list : List.of();
-}
+    @GetMapping("/popular-products/wishlist")
+    public List<PopularProduct> getPopularProductsByWishlist() {
+        List<PopularProduct> list = popularProductService.getTopProductsByWishlist();
+        return list != null ? list : List.of();
+    }
 
 }

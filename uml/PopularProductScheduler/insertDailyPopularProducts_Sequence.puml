@@ -1,0 +1,11 @@
+@startuml
+skinparam dpi 200
+actor Actor
+
+Actor -> PopularProductScheduler : insertDailyPopularProducts()
+PopularProductScheduler -> PopularProductService : generatePopularProducts()
+PopularProductService -> PopularProductMapper : findTopProductsByWishlist()
+PopularProductMapper -> Database : SELECT
+PopularProductService <-- PopularProductMapper : List<PopularProduct>
+PopularProductScheduler <-- PopularProductService : void
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+skinparam dpi 200
+actor Actor
+
+Actor -> AccountSchedulers : runDailyStatistics()
+AccountSchedulers -> MemberStatisticsService : saveAndGetAll()
+MemberStatisticsService -> MemberStatisticsMapper : countByJoinDate(LocalDate)
+MemberStatisticsMapper -> Database : SELECT
+MemberStatisticsService <-- MemberStatisticsMapper : int
+MemberStatisticsService -> MemberStatisticsMapper : insertDailyCount(LocalDate, int)
+MemberStatisticsMapper -> Database : INSERT
+MemberStatisticsService -> MemberStatisticsMapper : selectAllDailyCounts()
+MemberStatisticsMapper -> Database : SELECT
+MemberStatisticsService <-- MemberStatisticsMapper : List<MemberStatics>
+AccountSchedulers <-- MemberStatisticsService : List<MemberStatics>
+@enduml

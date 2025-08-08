@@ -1,0 +1,21 @@
+@startuml
+skinparam dpi 200
+actor Actor
+
+Actor -> AccountSchedulers : processOutMembers()
+AccountSchedulers -> MemberService : processOutMembers()
+MemberService -> MemberMapper : selectOutMemberPhoto()
+MemberMapper -> Database : SELECT
+MemberService <-- MemberMapper : List<Members>
+MemberService -> MemberMapper : deleteBasketByMemberId()
+MemberMapper -> Database : DELETE
+MemberService -> MemberMapper : deleteOutMembers()
+MemberMapper -> Database : DELETE
+MemberService <-- MemberMapper : void
+AccountSchedulers <-- MemberService : List<Members>
+loop for each Members
+    AccountSchedulers -> FileHelper : deleteFile(String)
+    FileHelper -> File System : 파일 삭제
+end
+AccountSchedulers <-- FileHelper : void
+@enduml

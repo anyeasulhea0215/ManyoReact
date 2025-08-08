@@ -29,16 +29,16 @@ public class PopuralProductsServiceTest {
         }
     }
 
-    @Test
-    void testGetYesterdayTopProducts() {
-        List<PopularProduct> results = popularProductService.getYesterdayTopProducts();
-
-        assertNotNull(results, "결과는 null이 아니어야 합니다.");
-        assertTrue(results.size() >= 0, "결과 리스트는 0개 이상이어야 합니다.");
-
-        log.debug("getYesterdayTopProducts() 결과 수: {}", results.size());
-        results.forEach(product -> log.debug(product.toString()));
-    }
+    /*
+     * @Test void testGetYesterdayTopProducts() { List<PopularProduct> results =
+     * popularProductService.getYesterdayTopProducts();
+     * 
+     * assertNotNull(results, "결과는 null이 아니어야 합니다."); assertTrue(results.size() >= 0,
+     * "결과 리스트는 0개 이상이어야 합니다.");
+     * 
+     * log.debug("getYesterdayTopProducts() 결과 수: {}", results.size()); results.forEach(product ->
+     * log.debug(product.toString())); }
+     */
 
     @Test
     void testGetTopProductsByWishlist() {

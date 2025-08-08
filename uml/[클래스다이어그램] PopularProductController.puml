@@ -1,0 +1,25 @@
+@startuml
+skinparam dpi 200
+
+class PopularProductController {
+    +PopularProductController(popularProductService: PopularProductService)
+    +getPopularProductsByWishlist(): List<PopularProduct>
+    -popularProductService: PopularProductService
+}
+
+class PopularProductService <<interface>> {
+    +getTopProductsByWishlist(): List<PopularProduct>
+    +generatePopularProducts(): void
+}
+
+class PopularProduct {
+    -productId: int
+    -productName: String
+    -totalCount: int
+    -statDate: LocalDate
+    +PopularProduct()
+}
+
+PopularProductController --> "HasA" PopularProductService : HasA
+PopularProductService --> "HasA" PopularProduct : HasA
+@enduml

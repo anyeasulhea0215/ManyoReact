@@ -1,0 +1,32 @@
+@startuml
+skinparam dpi 200
+
+class MemberStatisticsRestController {
+    +MemberStatisticsRestController(memberStatisticsService: MemberStatisticsService)
+    +getMemberStaticsCount(): List<MemberStatics>
+    -memberStatisticsService: MemberStatisticsService
+}
+
+class MemberStatisticsService {
+    +MemberStatisticsService(memberStatisticsMapper: MemberStatisticsMapper)
+    +saveAndGetAll(): List<MemberStatics>
+    -memberStatisticsMapper: MemberStatisticsMapper
+}
+
+class MemberStatisticsMapper <<interface>> {
+    +countByJoinDate(date: LocalDate): int
+    +insertDailyCount(date: LocalDate, count: int): int
+    +selectAllDailyCounts(): List<MemberStatics>
+}
+
+class MemberStatics {
+    -id: int
+    -date: LocalDate
+    -count: int
+    +MemberStatics()
+}
+
+MemberStatisticsRestController --> "HasA" MemberStatisticsService : HasA
+MemberStatisticsService --> "HasA" MemberStatisticsMapper : HasA
+MemberStatisticsService --> "HasA" MemberStatics : HasA
+@enduml
